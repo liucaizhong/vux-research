@@ -1,15 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
 
 Vue.use(Router)
 
 export default new Router({
+  // mode: process.env.NODE_ENV === 'development' ? 'history' : 'hash',
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      component: (r) => {
+        require(['@/components/index'], r)
+      }
+    },
+    {
+      path: '/workplan',
+      component: (r) => {
+        require(['@/components/workplan'], r)
+      }
     }
   ]
 })

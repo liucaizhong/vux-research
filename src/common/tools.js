@@ -3,7 +3,6 @@ export default {
   // judge whether the two objects are same
   // compare plain object
   isSameObject (a, b) {
-    console.log('begin isSameObject')
     if (Object.keys(a).length !== Object.keys(b).length) {
       return false
     }
@@ -33,5 +32,33 @@ export default {
     } else {
       return 'android'
     }
+  },
+  getCookie (name) {
+    if (document.cookie.length > 0) {
+      let start = document.cookie.indexOf(name + '=')
+      if (start !== -1) {
+        start = start + name.length + 1
+        let end = document.cookie.indexOf(';', start)
+        if (end === -1) {
+          end = document.cookie.length
+        }
+        return decodeURIComponent(document.cookie.substring(start, end))
+      }
+    }
+    return ''
+  },
+  setCookie (name, value, expiredays) {
+    let exdate = new Date()
+    exdate.setDate(exdate.getDate() + expiredays)
+    document.cookie = name + '=' + encodeURIComponent(value) +
+    ((expiredays === null) ? '' : ';expires=' + exdate.toGMTString())
   }
+  // date formatter:use vux's dateformat func
+  // dateFormat (o, s) {
+  //   let arr = []
+  //   arr.push(o.getFullYear())
+  //   arr.push(o.getMonth() + 1)
+  //   arr.push(o.getDate())
+  //   return arr.join(s)
+  // }
 }

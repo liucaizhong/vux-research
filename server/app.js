@@ -20,19 +20,19 @@ app.use(cookieParser())
 // app.use(express.static(path.join(__dirname, 'public')));
 
 // set cors header
-app.all('*', function(req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild')
-    res.setHeader('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS')
+app.all('*', function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild')
+  res.setHeader('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS')
 
-    if (req.method == 'OPTIONS') {
-      console.log('Options start!')
-      res.statusCode = 204
-    } else {
-      next()
-    }
-});
+  if (req.method === 'OPTIONS') {
+    console.log('Options start!')
+    res.statusCode = 204
+  } else {
+    next()
+  }
+})
 
-app.use('/', require('./index.js')());
+app.use('/', require('./index.js')())
 
 module.exports = app

@@ -5,17 +5,16 @@ import FastClick from 'fastclick'
 import router from './router'
 import store from './store'
 import App from './App'
-import tools from './common/tools'
 // load vuex i18n module
 import vuexI18n from 'vuex-i18n'
+import { AjaxPlugin } from 'vux'
 
 FastClick.attach(document.body)
 Vue.use(vuexI18n.plugin, store)
+Vue.use(AjaxPlugin)
+require('es6-promise').polyfill()
 
 Vue.config.productionTip = false
-
-// register global functions
-Vue.prototype.$tools = tools.default
 
 // get the language
 let lang = navigator.language || navigator.browserLanguage
@@ -34,11 +33,11 @@ router.beforeEach(function (to, from, next) {
   next()
 })
 
-router.afterEach(function (to) {
-  store.commit('updateLoadingStatus', {
-    isLoading: false
-  })
-})
+// router.afterEach(function (to) {
+//   store.commit('updateLoadingStatus', {
+//     isLoading: false
+//   })
+// })
 
 /* eslint-disable no-new */
 new Vue({

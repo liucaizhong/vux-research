@@ -9,8 +9,13 @@
       :list="banners"
     >
     </swiper>
-    <grid :row="3">
-      <grid-item :link="grid.href" :label="$t(grid.label)" v-for="(grid, i) in grids" :key="i">
+    <grid :rows="3">
+      <grid-item
+        v-for="(grid, i) in grids"
+        :link="grid.href"
+        :label="$t(grid.label)"
+        :key="i"
+      >
         <img slot="icon" :src="grid.icon">
       </grid-item>
     </grid>
@@ -32,6 +37,11 @@ export default {
       grids: GRIDS,
       banners: BANNERS
     }
+  },
+  mounted () {
+    this.$store.commit('updateLoadingStatus', {
+      isLoading: false
+    })
   }
 }
 </script>

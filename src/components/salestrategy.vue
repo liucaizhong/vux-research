@@ -55,8 +55,7 @@
             >
               <option disabled value="">请选择</option>
               <option v-for="(val, i) in range" :value="i">{{ val }}</option>
-            </select>
-            &nbsp;-
+            </select>&nbsp;-
           </div>
         </template>
         <template slot="trading2" scope="props">
@@ -750,7 +749,7 @@ export default {
 
   .table {
     transition: all .8s cubic-bezier(.55, 0, .1, 1);
-    margin-top: 90px;
+    margin-top: 95px;
 
     table {
       min-width: 800px !important;

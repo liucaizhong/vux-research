@@ -82,3 +82,28 @@ export const INDUSTRY = ['internet_media', 'electronics', 'computer',
 export const LEFTBTNTEXT = ['preWeek', 'preDoubleWeek', 'preMonth', 'preQuarter']
 export const RIGHTTBTNTEXT = ['nextWeek', 'nextDoubleWeek', 'nextMonth', 'nextQuarter']
 export const DAYMILLISECONDS = 24 * 60 * 60 * 1000
+// company infos
+export const COMPINFOS = {
+  '0': {
+    name: '东方证券研究所',
+    logo: require('@/assets/dfzq_logo.png'),
+    style: 'width: 150px;',
+    wxConfig: {
+      appid: 'wx50777cd18380e8d2',
+      agentid: '16',
+      redirectUri: encodeURIComponent('http://wwy94621.appchizi.com/index.php'),
+      state: 'web_login'
+    }
+  },
+  '1': {
+    name: '南土资产',
+    logo: require('@/assets/sland_logo.png'),
+    style: 'width: 70px;',
+    wxConfig: {
+      appid: 'wxfec7719a18cec63a',
+      agentid: '2',
+      redirectUri: encodeURIComponent('http://slandasset.appchizi.com/index.php'),
+      state: 'web_login'
+    }
+  }
+}

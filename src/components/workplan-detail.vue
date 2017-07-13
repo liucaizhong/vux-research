@@ -12,6 +12,20 @@
       @save="saveData"
       :btnAuth="configBtnAuth()"
     >
+      <!-- <template slot="event" scope="props">
+        <textarea
+          :value="props.value"
+          :data-idx="props.idx"
+          :readonly="props.readonly"
+          @input="props.changeEvent"
+          :data-fieldname="props.fieldname"
+          cols="21"
+          rows="6"
+          wrap="hard"
+          maxlength="66"
+        >
+        </textarea>
+      </template> -->
     </data-table>
 
     <toast
@@ -234,6 +248,16 @@ export default {
       .panel {
         .actions {
           right: 35px;
+        }
+      }
+
+      .content table thead tr {
+        th {
+          color: #000;
+        }
+
+        th:first-child > div {
+          display: none;
         }
       }
     }

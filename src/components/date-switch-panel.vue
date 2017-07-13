@@ -229,6 +229,8 @@ export default {
 
   .main-title {
     font-weight: 300;
+    font-size: 14px;
+    line-height: 2;
   }
 
   a {

@@ -73,11 +73,13 @@ let webpackConfig = {
 
 module.exports = vuxLoader.merge(webpackConfig, {
   plugins: ['vux-ui', 'progress-bar', 'duplicate-style',
-    'inline-manifest', {
-    name: 'i18n',
-    vuxStaticReplace: false,
-    staticReplace: false,
-    extractToFiles: 'src/locales/components.yml',
-    localeList: ['en', 'zh-CN']
-  }]
+    'inline-manifest',
+    {
+      name: 'i18n',
+      vuxStaticReplace: false,
+      staticReplace: false,
+      extractToFiles: 'src/locales/components.yml',
+      localeList: ['en', 'zh-CN']
+    }
+  ]
 })

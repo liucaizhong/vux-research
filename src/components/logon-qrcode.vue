@@ -1,11 +1,11 @@
 <template lang="html">
   <div class="logon-qrcode">
     <div class="logo">
-      <!-- reserved for future -->
+      <img :src="compinfo.logo" alt="" :style="compinfo.style">
     </div>
     <div class="logon-box">
-      <div class="qrcode">
-        <qrcode
+      <div id="wxQRCode" class="qrcode">
+        <!-- <qrcode
           :value="logonUri"
           type="img"
           :size="220"
@@ -23,12 +23,12 @@
           </i>
           </div>
           <p class="refresh-tips">{{ $t('logon_refresh_tips') }}</p>
-        </div>
+        </div> -->
       </div>
-      <div v-show="!needRefresh">
+      <!-- <div v-show="!needRefresh">
         <p class="sub-title">{{ $t('logon_qrcode_subtitle') }}</p>
         <p class="sub-desc">{{ $t('logon_qrcode_subdesc') }}</p>
-      </div>
+      </div> -->
     </div>
     <div class="copyright">
       <p class="desc">© 1998 - 2017 Orient Securities. All Rights Reserved</p>
@@ -38,6 +38,7 @@
 
 <script>
 import { Qrcode } from 'vux'
+import { COMPINFOS } from '@/common/constant'
 
 export default {
   components: {
@@ -45,36 +46,46 @@ export default {
   },
   data () {
     return {
-      needRefresh: false,
-      spinActive: false,
-      intervalMS: 5 * 60 * 1000,
-      intervalFunc: null,
-      ifInterval: false,
-      logonUri: ''
+      // needRefresh: false,
+      // spinActive: false,
+      // intervalMS: 5 * 60 * 1000,
+      // intervalFunc: null,
+      // ifInterval: false,
+      // logonUri: '', //vux qrcode
+      // 0:东方证券研究所, 1:南土资产
+      comp: '0',
+      compinfos: COMPINFOS
+    }
+  },
+  computed: {
+    compinfo: function () {
+      return this.compinfos[this.comp]
     }
   },
   methods: {
-    refreshQrCode () {
-      let vm = this
-      vm.spinActive = true
-      // update qr code
-      vm.setQrCode()
-      vm.spinActive = false
-      vm.needRefresh = false
-      // set the qr expires handler
-      vm.intervalFunc = false && setInterval(function () {
-        vm.needRefresh = true
-        clearInterval(vm.intervalFunc)
-      }, vm.intervalMS)
-    },
+    // refreshQrCode () {
+    //   let vm = this
+    //   vm.spinActive = true
+    //   // update qr code
+    //   vm.setQrCode()
+    //   vm.spinActive = false
+    //   vm.needRefresh = false
+    //   // set the qr expires handler
+    //   vm.intervalFunc = false && setInterval(function () {
+    //     vm.needRefresh = true
+    //     clearInterval(vm.intervalFunc)
+    //   }, vm.intervalMS)
+    // },
     setQrCode () {
-      // get uuid from server
-      // to do later
-      let uri = encodeURIComponent('http://slandasset.appchizi.com')
-      // let id = '2'
-      // let wxUri = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfec7719a18cec63a&redirect_uri=${uri}&response_type=code&scope=snsapi_base&agentid=${id}&state=ok#wechat_redirect`
-      let wxUri = `https://open.work.weixin.qq.com/wwopen/sso/3rd_qrConnect?appid=wxfec7719a18cec63a&redirect_uri=${uri}&state=web_login&usertype=admin`
-      this.logonUri = wxUri
+      let wxConfig = this.compinfo.wxConfig
+      window.WwLogin({
+        'id': 'wxQRCode',
+        'appid': wxConfig.appid,
+        'agentid': wxConfig.agentid,
+        'redirect_uri': wxConfig.redirectUri,
+        'state': wxConfig.state
+        // 'href': ''
+      })
     }
   },
   mounted () {
@@ -83,12 +94,12 @@ export default {
       isLoading: false
     })
     // set qr code
-    vm.setQrCode()
-    // set the qr expires handler
-    vm.intervalFunc = false && setInterval(function () {
-      vm.needRefresh = true
-      clearInterval(vm.intervalFunc)
-    }, vm.intervalMS)
+    vm.setQrCode(this.comp)
+    // // set the qr expires handler
+    // vm.intervalFunc = false && setInterval(function () {
+    //   vm.needRefresh = true
+    //   clearInterval(vm.intervalFunc)
+    // }, vm.intervalMS)
   }
 }
 </script>
@@ -99,11 +110,13 @@ export default {
     background-size: cover;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 
     .logo {
-      position: absolute;
-      left: 60px;
-      top: 60px;
+      margin-left: 30px;
+      margin-top: 10px;
     }
 
     .qr-code-expires {
@@ -111,21 +124,18 @@ export default {
     }
 
     .logon-box {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-left: -188px;
-      margin-top: -270px;
       border-radius: 4px;
       background-color: #fff;
       width: 375px;
       height: 540px;
       box-shadow: 0 2px 10px #999;
+      align-self: center;
 
       .qrcode {
         position: relative;
         text-align: center;
         margin: 60px auto 12px;
+        width: 100%;
       }
 
       .sub-title {
@@ -172,11 +182,10 @@ export default {
     }
 
     .copyright {
-      position: absolute;
-      bottom: 60px;
-      right: 60px;
       color: #d3d3d3;
       font-size: 12px;
+      align-self: flex-end;
+      margin-right: 30px;
     }
   }
 </style>

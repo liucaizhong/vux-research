@@ -5,14 +5,14 @@ export default {
   'workplan_main_title': '工作计划',
   'workplan_detail_main_title': '工作计划',
   'salestrategy_main_title': '销售策略',
-  'activity_main_title': '活动预告',
+  'activity_main_title': '策略会',
   // grid labels
   'grid_1_label': '投研日历',
   'grid_2_label': '个股推荐',
   'grid_3_label': '出勤日历',
   'grid_4_label': '工作计划',
   'grid_5_label': '通讯录',
-  'grid_6_label': '活动预告',
+  'grid_6_label': '策略会',
   'grid_7_label': '销售策略',
   // text of back button
   'nav_back_text': '返回',
@@ -94,5 +94,16 @@ export default {
   'logon_qrcode_subdesc': '网页版微投研需要配合手机使用',
   'logon_refresh_tips': '二维码失效，点击刷新',
   'add_feedback_strategy': '新增策略反馈',
-  'add_feedback_research': '新增研究反馈'
+  'add_feedback_research': '新增研究反馈',
+  // activity
+  'select_date_range': '选择起始日期和结束日期',
+  'start_date': '起始日期',
+  'end_date': '结束日期',
+  'Su': '日',
+  'Mo': '一',
+  'Tu': '二',
+  'We': '三',
+  'Th': '四',
+  'Fr': '五',
+  'Sa': '六'
 }

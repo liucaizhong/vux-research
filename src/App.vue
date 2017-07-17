@@ -14,7 +14,7 @@
         :left-options="{ backText: $t(xHeaderConfig.backText), preventGoBack: xHeaderConfig.preventGoBack}"
         :title="$t(xHeaderConfig.title)"
         :transition="'title-' + transitionName"
-        @on-click-back="onBack(xHeaderConfig.manualBack)"
+        @on-click-back="onBack"
       >
       </x-header>
       <transition :name="transitionName">
@@ -25,11 +25,20 @@
         </router-view>
       </transition>
     <!-- </view-box> -->
+    <toast
+      v-model="isUnSave"
+      :time="2000"
+      type="warn"
+      position="default"
+      :is-show-mask="true"
+    >
+      {{ $t('has_any_nosave') }}
+    </toast>
   </div>
 </template>
 
 <script>
-import { Loading, XHeader, TransferDomDirective as TransferDom } from 'vux'
+import { Loading, XHeader, TransferDomDirective as TransferDom, Toast } from 'vux'
 import { mapState } from 'vuex'
 import tools from './common/tools'
 
@@ -37,7 +46,8 @@ export default {
   name: 'app',
   components: {
     Loading,
-    XHeader
+    XHeader,
+    Toast
     // ViewBox
   },
   directives: {
@@ -47,18 +57,21 @@ export default {
     return {
       transitionName: 'slide-left',
       comp: '1', // 南土资产
+      isUnSave: false,
       xHeaderConfig: {
         show: true,
         backText: 'nav_back_text',
         title: 'index_main_title',
-        preventGoBack: false
+        preventGoBack: false,
+        onBack: {}
       }
     }
   },
   methods: {
-    onBack (url) {
-      window.location.href = url
+    onBack () {
+      // window.location.href = url
       // window.open(url, '_self')
+      this.xHeaderConfig.onBack(this)
     }
   },
   watch: {

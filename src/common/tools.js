@@ -29,8 +29,10 @@ export default {
   device () {
     if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
       return 'ios'
-    } else {
+    } else if (/(Android)/i.test(navigator.userAgent)) {
       return 'android'
+    } else {
+      return 'pc'
     }
   },
   getCookie (name) {

@@ -21,7 +21,7 @@
         @save="saveData"
         :btnAuth="configBtnAuth()"
         @add="addData"
-        :customAdd="true"
+        :customAdd="customAdd"
       >
         <template slot="salesPerson" scope="props">
           <input
@@ -127,7 +127,7 @@
         @save="saveData"
         :btnAuth="configBtnAuth()"
         @add="addData"
-        :customAdd="true"
+        :customAdd="customAdd"
       >
         <template slot="salesPerson" scope="props">
           <input
@@ -232,6 +232,16 @@
     >
       {{ $t('save_success') }}
     </toast>
+
+    <!-- <toast
+      v-model="isUnSave"
+      :time="2000"
+      type="warn"
+      position="default"
+      :is-show-mask="true"
+    >
+      {{ $t('has_any_nosave') }}
+    </toast> -->
 
     <div v-transfer-dom>
       <popup class="add-popup" v-model="showAddCSPopup" position="bottom" height="100%">
@@ -360,8 +370,7 @@
 </template>
 
 <script>
-import { SALESTRATEGYTYPES, SALESTRATEGYFORMS,
-  TRADINGRANGE, RISKLEVEL, INDUSTRY } from '@/common/constant'
+import { SALESTRATEGYTYPES, SALESTRATEGYFORMS, TRADINGRANGE, RISKLEVEL, INDUSTRY } from '@/common/constant'
 import DataTable from './data-table'
 import DateSwitchPanel from './date-switch-panel'
 import { Toast, Tab, TabItem, Swiper, SwiperItem, TransferDomDirective as TransferDom, Popup, Group, XInput, PopupPicker, XButton, XTextarea } from 'vux'
@@ -376,6 +385,7 @@ export default {
       level: RISKLEVEL,
       industry: INDUSTRY,
       isSaved: false,
+      // isUnSave: false,
       tableNo: 0,
       dbWeekRange: {},
       quarterRange: {},
@@ -418,7 +428,8 @@ export default {
         reason2: '',
         stockInterest: '',
         requirement: ''
-      }
+      },
+      customAdd: true
     }
   },
   directives: {
@@ -493,6 +504,11 @@ export default {
   //     deep: true
   //   }
   // },
+  created () {
+    if (!tools.device().localeCompare('pc')) {
+      this.customAdd = false
+    }
+  },
   mounted () {
     // set table height
     let contentH = window.innerHeight
@@ -563,6 +579,20 @@ export default {
     this.defaultAddCR.salesPerson = this.userInfo.userName
   },
   methods: {
+    // onBack () {
+    //   let ifSave = this.$store.state.salestrategy.every(cur => {
+    //     if (cur.willInsert.length || cur.willUpdate.length || cur.willDelete.length) {
+    //       return false
+    //     }
+    //     return true
+    //   })
+    //
+    //   if (ifSave) {
+    //     this.$router.go(-1)
+    //   } else {
+    //     this.isUnSave = true
+    //   }
+    // },
     comfirmAdd (t) {
       let vm = this
       if (!t.localeCompare('s1')) {

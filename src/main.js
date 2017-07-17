@@ -12,16 +12,17 @@ import { AjaxPlugin } from 'vux'
 FastClick.attach(document.body)
 Vue.use(vuexI18n.plugin, store)
 Vue.use(AjaxPlugin)
-require('es6-promise').polyfill()
+// require('es6-promise').polyfill()
 
 Vue.config.productionTip = false
 
 // get the language
 let lang = navigator.language || navigator.browserLanguage
+lang = lang.toLowerCase()
 console.log(lang)
 // add translations directly to the application
 // default language translation is Chinese
-Vue.i18n.add(lang, require(`./locales/${lang}`).default || require('./locales/zh-CN').default)
+Vue.i18n.add(lang, require(`./locales/${lang}`).default)
 // set the start locale to use
 Vue.i18n.set(lang)
 

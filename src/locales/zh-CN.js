@@ -23,6 +23,7 @@ export default {
   'router_loading_text': '请稍候...',
   'save_success': '已保存',
   'to_add_later': '待添加',
+  'has_any_nosave': '请先保存',
   // desc of deps
   'research_dep': '研究部',
   // desc of plan types

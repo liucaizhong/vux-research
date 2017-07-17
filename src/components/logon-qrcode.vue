@@ -53,7 +53,7 @@ export default {
       // ifInterval: false,
       // logonUri: '', //vux qrcode
       // 0:东方证券研究所, 1:南土资产
-      comp: '0',
+      comp: '1',
       compinfos: COMPINFOS
     }
   },

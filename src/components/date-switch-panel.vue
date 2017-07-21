@@ -20,8 +20,7 @@
 
 <script>
 // type: 0:weekly，1:double weekly，2:monthly，3:quarterly
-import { LEFTBTNTEXT, RIGHTTBTNTEXT, DAYMILLISECONDS } from '@/common/constant'
-// import tools from '@/common/tools'
+import { LEFTBTNTEXT, RIGHTTBTNTEXT, DAYMILLISECONDS, WEEKMILLISECONDS } from '@/common/constant'
 import { dateFormat } from 'vux'
 
 export default {
@@ -30,6 +29,7 @@ export default {
       leftBtnTexts: LEFTBTNTEXT,
       rightBtnTexts: RIGHTTBTNTEXT,
       dayMS: DAYMILLISECONDS,
+      weekMS: WEEKMILLISECONDS,
       curDateRange: {},
       mainTitle: ''
     }
@@ -43,7 +43,7 @@ export default {
     }
   },
   created () {
-    this.onSetCurDate(new Date())
+    this.setCurDate(new Date())
     this.$emit('update:date', this.curDateRange)
   },
   watch: {
@@ -52,7 +52,7 @@ export default {
         switch (this.type) {
           case 0:
           case 1:
-            this.mainTitle = `${n.start} - ${n.end}`
+            this.mainTitle = `${dateFormat(n.start, 'YYYY-MM-DD')} - ${dateFormat(n.end, 'YYYY-MM-DD')}`
             break
           case 2:
             this.mainTitle = `${n.year}${this.$t('year')}${n.month}${this.$t('month')}`
@@ -77,16 +77,10 @@ export default {
   },
   methods: {
     onLeft () {
-      let date = this.curDateRange.date
-      let preDate = null
       switch (this.type) {
         case 0:
-          preDate = new Date(date.getTime() - 7 * this.dayMS)
-          this.onSetCurDate(preDate)
-          break
         case 1:
-          preDate = new Date(date.getTime() - 14 * this.dayMS)
-          this.onSetCurDate(preDate)
+          this.calPreWeek(this.curDateRange)
           break
         case 2:
           this.calPreMonth(this.curDateRange)
@@ -98,16 +92,10 @@ export default {
       this.$emit('update:date', this.curDateRange)
     },
     onRight () {
-      let date = this.curDateRange.date
-      let nextDate = null
       switch (this.type) {
         case 0:
-          nextDate = new Date(date.getTime() + 7 * this.dayMS)
-          this.onSetCurDate(nextDate)
-          break
         case 1:
-          nextDate = new Date(date.getTime() + 14 * this.dayMS)
-          this.onSetCurDate(nextDate)
+          this.calNextWeek(this.curDateRange)
           break
         case 2:
           this.calNextMonth(this.curDateRange)
@@ -117,6 +105,32 @@ export default {
           break
       }
       this.$emit('update:date', this.curDateRange)
+    },
+    calPreWeek (o) {
+      if (this.type === 0) {
+        Object.assign(o, {
+          start: new Date(o.start.getTime() - this.weekMS),
+          end: new Date(o.end.getTime() - this.weekMS)
+        })
+      } else {
+        Object.assign(o, {
+          start: new Date(o.start.getTime() - 2 * this.weekMS),
+          end: new Date(o.end.getTime() - 2 * this.weekMS)
+        })
+      }
+    },
+    calNextWeek (o) {
+      if (this.type === 0) {
+        Object.assign(o, {
+          start: new Date(o.start.getTime() + this.weekMS),
+          end: new Date(o.end.getTime() + this.weekMS)
+        })
+      } else {
+        Object.assign(o, {
+          start: new Date(o.start.getTime() + 2 * this.weekMS),
+          end: new Date(o.end.getTime() + 2 * this.weekMS)
+        })
+      }
     },
     calPreMonth (o) {
       let y = o.year
@@ -166,32 +180,25 @@ export default {
         quarter: q
       })
     },
-    onSetCurDate (date) {
+    setCurDate (date) {
       let y = date.getFullYear()
       let m = date.getMonth() + 1
       let q = (m - 1) / 3 + 1
-      // let d = date.getDate()
-      let day = date.getDay()
+      let day = date.getDay() || 7
       let startWeek = new Date(date.getTime() - (day - 1) * this.dayMS)
-      let startDbWeek = new Date(date.getTime() - (day + 6) * this.dayMS)
       let endWeek = new Date(date.getTime() + (7 - day) * this.dayMS)
+      let { startDbWeek, endDbWeek } = this.calDbWeek(date)
       switch (this.type) {
         case 0:
           this.curDateRange = Object.assign({}, {
-            // start: tools.dateFormat(startWeek, '-'),
-            // end: tools.dateFormat(endWeek, '-'),
-            start: dateFormat(startWeek, 'YYYY-MM-DD'),
-            end: dateFormat(endWeek, 'YYYY-MM-DD'),
-            date: date
+            start: startWeek,
+            end: endWeek
           })
           break
         case 1:
           this.curDateRange = Object.assign({}, {
-            // start: tools.dateFormat(startDbWeek, '-'),
-            // end: tools.dateFormat(endWeek, '-'),
-            start: dateFormat(startDbWeek, 'YYYY-MM-DD'),
-            end: dateFormat(endWeek, 'YYYY-MM-DD'),
-            date: date
+            start: startDbWeek,
+            end: endDbWeek
           })
           break
         case 2:
@@ -206,6 +213,26 @@ export default {
             quarter: q
           })
           break
+      }
+    },
+    calDbWeek (d) {
+      let year = d.getFullYear()
+      let day = d.getDay() || 7
+      let fisrtDateOfYear = new Date(year, 0, 1)
+      let dayOfFirstDate = fisrtDateOfYear.getDay() || 7
+      let realFirstDate = new Date(fisrtDateOfYear.getTime() - (dayOfFirstDate - 1) * this.dayMS)
+      let dateGap = d.getTime() - realFirstDate.getTime()
+      let oddOrEvenWeek = Math.floor(dateGap / (2 * this.weekMS) % 2)
+      if (oddOrEvenWeek === 0) {
+        return {
+          startDbWeek: new Date(d.getTime() - (day - 1) * this.dayMS),
+          endDbWeek: new Date(d.getTime() + (14 - day) * this.dayMS)
+        }
+      } else {
+        return {
+          startDbWeek: new Date(d.getTime() - (7 + day - 1) * this.dayMS),
+          endDbWeek: new Date(d.getTime() + (7 - day) * this.dayMS)
+        }
       }
     }
   }

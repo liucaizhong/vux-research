@@ -82,6 +82,7 @@ export const INDUSTRY = ['internet_media', 'electronics', 'computer',
 export const LEFTBTNTEXT = ['preWeek', 'preDoubleWeek', 'preMonth', 'preQuarter']
 export const RIGHTTBTNTEXT = ['nextWeek', 'nextDoubleWeek', 'nextMonth', 'nextQuarter']
 export const DAYMILLISECONDS = 24 * 60 * 60 * 1000
+export const WEEKMILLISECONDS = 7 * 24 * 60 * 60 * 1000
 // company infos
 export const COMPINFOS = {
   '0': {
@@ -107,3 +108,5 @@ export const COMPINFOS = {
     }
   }
 }
+// define activity
+export const ACTIVITYCOLS = ['date', 'title', 'time', 'place', 'dial', 'guests', 'contacts']

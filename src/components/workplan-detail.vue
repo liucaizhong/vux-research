@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="workplan">
+    <group-title>{{ mainTitle }}</group-title>
     <data-table
       v-for="(t, i) in planTypes"
       :tableId="`${t}Table`"
@@ -38,8 +39,12 @@
       {{ $t('save_success') }}
     </toast>
 
-    <card class="task" :header="{ title: $t('task_achievement') }">
-      <div class="chart" slot="content"></div>
+    <!-- <card class="task" :header="{ title: $t('task_plan_achievement') }">
+      <div class="plan-chart" slot="content"></div>
+    </card> -->
+
+    <card class="task" :header="{ title: $t('task_real_achievement') }">
+      <div class="real-chart" slot="content"></div>
     </card>
   </div>
 </template>
@@ -47,13 +52,14 @@
 <script>
 import { PLANTYPES, PLANFORMS } from '@/common/constant'
 import DataTable from './data-table'
-import { Card, Toast } from 'vux'
+import { Card, Toast, GroupTitle } from 'vux'
 
 export default {
   components: {
     DataTable,
     Card,
-    Toast
+    Toast,
+    GroupTitle
   },
   data () {
     return {
@@ -65,13 +71,20 @@ export default {
       isSaved: false
     }
   },
+  computed: {
+    mainTitle: function () {
+      return `${this.year}${this.$t('year')}${this.quarter}${this.$t('quarter')}`
+    }
+  },
+  created () {
+    let date = new Date()
+    this.year = date.getFullYear()
+    this.quarter = date.getMonth() / 3 + 1
+    this.curUserId = this.$route.params.userId
+  },
   mounted () {
     // set current year and quarter
     let that = this
-    let date = new Date()
-    this.year = date.getFullYear()
-    this.quarter = Math.floor(date.getMonth() / 3)
-    this.curUserId = this.$route.params.userId
     // get workplan
     function getUserWorkplan (vm) {
       let url = process.env.NODE_ENV === 'production'
@@ -99,13 +112,17 @@ export default {
       // declare echarts
       let echarts = require('echarts')
       // get dom element
-      let taskHistogram = document.querySelector('.task .chart')
+      // let taskHistogram1 = document.querySelector('.task .plan-chart')
+      let taskHistogram = document.querySelector('.task .real-chart')
       // calc height;ratio 4:3
-      console.dir(taskHistogram)
+      // console.dir(taskHistogram)
       let width = taskHistogram.offsetWidth || taskHistogram.clientWidth || taskHistogram.scrollWidth
-      taskHistogram.setAttribute('style', `height:${Math.round(width * 3 / 4)}px;`)
+      width = Math.round(width * 3 / 4)
+      taskHistogram.setAttribute('style', `height:${width}px;`)
+      // taskHistogram2.setAttribute('style', `height:${width}px;`)
       // declare the histogram instance
       let histogram = echarts.init(taskHistogram)
+      // let histogram2 = echarts.init(taskHistogram2)
       // axios get data
       let url = process.env.NODE_ENV === 'production'
                     ? './API/getFinished.php'
@@ -121,7 +138,48 @@ export default {
       })
       .then((response) => {
         let data = response.data
+        let yAxisMax = 10
+        let chartData = vm.planTypes.map((type) => {
+          yAxisMax = Math.max(yAxisMax, +data[type].finish)
+          return data[type].finish
+        })
+        // console.dir(data)
         // draw the histogram
+        // histogram1.setOption({
+        //   color: ['#5584B1'],
+        //   title: {
+        //     show: false
+        //   },
+        //   tooltip: {
+        //     trigger: 'axis',
+        //     axisPointer: {
+        //       type: 'shadow'
+        //     }
+        //     // formatter: '{b}<br>{a}: {c}%'
+        //   },
+        //   xAxis: [{
+        //     type: 'category',
+        //     data: vm.planTypes.map((type) => {
+        //       return vm.$t(type)
+        //     }),
+        //     axisLabel: {
+        //       show: true,
+        //       interval: 0
+        //     }
+        //   }],
+        //   yAxis: [{
+        //     name: '次数',
+        //     type: 'value'
+        //   }],
+        //   series: [{
+        //     name: '次数',
+        //     type: 'bar',
+        //     data: vm.planTypes.map((type) => {
+        //       return data[type].plan
+        //     })
+        //   }]
+        // })
+
         histogram.setOption({
           color: ['#5584B1'],
           title: {
@@ -131,8 +189,8 @@ export default {
             trigger: 'axis',
             axisPointer: {
               type: 'shadow'
-            },
-            formatter: '{b}<br>{a}: {c}%'
+            }
+            // formatter: '{b}<br>{a}: {c}%'
           },
           xAxis: [{
             type: 'category',
@@ -145,18 +203,15 @@ export default {
             }
           }],
           yAxis: [{
-            name: '完成比(%)',
-            min: 0,
-            max: 100,
+            name: '次数',
             type: 'value',
-            splitNumber: 5
+            minInterval: 1,
+            max: yAxisMax
           }],
           series: [{
-            name: '完成比',
+            name: '次数',
             type: 'bar',
-            data: vm.planTypes.map((type) => {
-              return Math.round(+data[type].finish / +data[type].plan * 100)
-            })
+            data: chartData
           }]
         })
       })
@@ -221,10 +276,14 @@ export default {
       })
     },
     configBtnAuth () {
+      let loginUserId = this.$store.state.loginfo.loginfo.userId
+      let editAuth = !this.curUserId.localeCompare(loginUserId) || !loginUserId.localeCompare('chenjw')
       return {
-        edit: true,
+        edit: editAuth,
         add: true,
         del: true,
+        undo: false,
+        save: true,
         download: false,
         redirect: false
       }
@@ -238,6 +297,7 @@ export default {
     .task {
       margin-left: 10px;
       margin-right: 10px;
+      margin-bottom: 10px;
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
       .weui-panel__hd {
         color: #000;
@@ -246,14 +306,25 @@ export default {
     }
     .table {
       .panel {
+        // justify-content: flex-start;
+
         .actions {
           right: 35px;
+          div {
+            margin-left: 15px;
+            // a:nth-child(3) {
+            //   position: absolute;
+            //   right: 15px;
+            //   top: 10px;
+            // }
+          }
         }
       }
 
       .content table thead tr {
         th {
           color: #000;
+          font-size: 15px;
         }
 
         th:first-child > div {

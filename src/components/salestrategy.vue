@@ -108,7 +108,7 @@
             cols="21"
             rows="6"
             wrap="hard"
-            maxlength="66"
+            maxlength="150"
           >
           </textarea>
         </template>
@@ -188,7 +188,7 @@
             cols="21"
             rows="6"
             wrap="hard"
-            maxlength="66"
+            maxlength="150"
           >
           </textarea>
         </template>
@@ -216,7 +216,7 @@
             cols="21"
             rows="6"
             wrap="hard"
-            maxlength="66"
+            maxlength="150"
           >
           </textarea>
         </template>
@@ -373,7 +373,7 @@
 import { SALESTRATEGYTYPES, SALESTRATEGYFORMS, TRADINGRANGE, RISKLEVEL, INDUSTRY } from '@/common/constant'
 import DataTable from './data-table'
 import DateSwitchPanel from './date-switch-panel'
-import { Toast, Tab, TabItem, Swiper, SwiperItem, TransferDomDirective as TransferDom, Popup, Group, XInput, PopupPicker, XButton, XTextarea } from 'vux'
+import { Toast, Tab, TabItem, Swiper, SwiperItem, TransferDomDirective as TransferDom, Popup, Group, XInput, PopupPicker, XButton, XTextarea, dateFormat } from 'vux'
 import tools from '@/common/tools'
 
 export default {
@@ -490,20 +490,59 @@ export default {
     XButton,
     XTextarea
   },
-  // watch: {
-  //   dbWeekRange: {
-  //     handler: function (n, o) {
-  //       console.dir(n)
-  //     },
-  //     deep: true
-  //   },
-  //   quarterRange: {
-  //     handler: function (n, o) {
-  //       console.dir(n)
-  //     },
-  //     deep: true
-  //   }
-  // },
+  watch: {
+    dbWeekRange: {
+      handler: function (n, o) {
+        let vm = this
+        let url = process.env.NODE_ENV === 'production'
+                  ? './API/getCS.php'
+                  : 'http://localhost:3000/getcs'
+
+        vm.$http.get(url, {
+          params: {
+            start: dateFormat(vm.dbWeekRange.start, 'YYYY-MM-DD'),
+            end: dateFormat(vm.dbWeekRange.end, 'YYYY-MM-DD'),
+            userId: vm.userInfo.userId
+          }
+        })
+        .then((response) => {
+          let dataObj = Object.assign({}, response.data)
+
+          vm.$store.commit('initsalestrategy', dataObj)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      },
+      deep: true
+    },
+    quarterRange: {
+      handler: function (n, o) {
+        let vm = this
+        let url = process.env.NODE_ENV === 'production'
+                  ? './API/getCR.php'
+                  : 'http://localhost:3000/getcr'
+
+        vm.$http.get(url, {
+          params: {
+            year: vm.quarterRange.year,
+            quarter: vm.quarterRange.quarter,
+            userId: vm.userInfo.userId
+          }
+        })
+        .then((response) => {
+          // console.dir(response)
+          let dataObj = Object.assign({}, response.data)
+
+          vm.$store.commit('initsalestrategy', dataObj)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      },
+      deep: true
+    }
+  },
   created () {
     if (!tools.device().localeCompare('pc')) {
       this.customAdd = false
@@ -523,17 +562,15 @@ export default {
 
       vm.$http.get(url, {
         params: {
-          start: vm.dbWeekRange.start,
-          end: vm.dbWeekRange.end,
+          start: dateFormat(vm.dbWeekRange.start, 'YYYY-MM-DD'),
+          end: dateFormat(vm.dbWeekRange.end, 'YYYY-MM-DD'),
           userId: vm.userInfo.userId
         }
       })
       .then((response) => {
         let dataObj = Object.assign({}, response.data)
 
-        if (!tools.isEmptyObject(dataObj) || !dataObj) {
-          vm.$store.commit('initsalestrategy', dataObj)
-        }
+        vm.$store.commit('initsalestrategy', dataObj)
       })
       .catch((error) => {
         console.log(error)
@@ -555,9 +592,8 @@ export default {
       .then((response) => {
         // console.dir(response)
         let dataObj = Object.assign({}, response.data)
-        if (!tools.isEmptyObject(dataObj) || !dataObj) {
-          vm.$store.commit('initsalestrategy', dataObj)
-        }
+
+        vm.$store.commit('initsalestrategy', dataObj)
       })
       .catch((error) => {
         console.log(error)
@@ -662,12 +698,11 @@ export default {
 
       if (d.hasOwnProperty('s1')) {
         let updObj = {
-          start: this.dbWeekRange.start,
-          end: this.dbWeekRange.end,
+          start: dateFormat(this.dbWeekRange.start, 'YYYY-MM-DD'),
+          end: dateFormat(this.dbWeekRange.end, 'YYYY-MM-DD'),
           userId: this.userInfo.userId,
           data: d['s1']
         }
-        console.dir(updObj)
         let url = process.env.NODE_ENV === 'production'
                   ? './API/updateCS.php'
                   : 'http://localhost:3000/updatecs'
@@ -681,9 +716,8 @@ export default {
           let dataObj = process.env.NODE_ENV === 'production'
                         ? Object.assign({}, response.data)
                         : JSON.parse(response.data)
-          if (!tools.isEmptyObject(dataObj) || !dataObj) {
-            this.$store.commit('initsalestrategy', dataObj)
-          }
+
+          this.$store.commit('initsalestrategy', dataObj)
         })
         .then(() => {
           this.$store.commit('updateLoadingStatus', {
@@ -716,9 +750,8 @@ export default {
           let dataObj = process.env.NODE_ENV === 'production'
                         ? Object.assign({}, response.data)
                         : JSON.parse(response.data)
-          if (!tools.isEmptyObject(dataObj) || !dataObj) {
-            this.$store.commit('initsalestrategy', dataObj)
-          }
+
+          this.$store.commit('initsalestrategy', dataObj)
         })
         .then(() => {
           this.$store.commit('updateLoadingStatus', {
@@ -749,6 +782,8 @@ export default {
         edit: true,
         add: true,
         del: true,
+        undo: true,
+        save: true,
         download: false,
         redirect: false
       }
@@ -778,7 +813,7 @@ export default {
   }
 
   .table {
-    transition: all .8s cubic-bezier(.55, 0, .1, 1);
+    // transition: all .8s cubic-bezier(.55, 0, .1, 1);
     margin-top: 95px;
 
     table {

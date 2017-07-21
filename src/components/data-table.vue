@@ -26,10 +26,10 @@ rowId="id"
           <a v-if="btnAuth.del" href="javascript:void(0);" @click="onDel">
             <i class="fa fa-trash-o" aria-hidden="true"></i>
           </a>
-          <a v-if="btnAuth.edit" href="javascript:void(0);" @click="onUndo">
+          <a v-if="btnAuth.undo" href="javascript:void(0);" @click="onUndo">
             <i class="fa fa-undo" aria-hidden="true"></i>
           </a>
-          <a v-if="btnAuth.edit" href="javascript:void(0);" @click="onSave">
+          <a v-if="btnAuth.save" href="javascript:void(0);" @click="onSave">
             <i class="fa fa-floppy-o" aria-hidden="true"></i>
           </a>
         </div>
@@ -269,10 +269,7 @@ export default {
       this.$emit('download', this.tableData)
     },
     onRedirect (e) {
-      let jumpData = this.$store.state[this.storeName][this.tableTitle].cur
-      this.$emit('save', {
-        [this.tableTitle]: jumpData
-      })
+      this.$emit('redirect', this.tableData)
     },
     onSave (e) {
       this.isEditing = !this.isEditing
@@ -288,7 +285,7 @@ export default {
       // console.dir(target)
       let oldVal = target._value || ''
       let newVal = target.value
-      console.log('old val is %s, new val is %s', oldVal, newVal)
+      // console.log('old val is %s, new val is %s', oldVal, newVal)
       if (oldVal.localeCompare(newVal)) {
         this.$store.commit(`update${this.storeName}`, {
           idx: target.dataset.idx,

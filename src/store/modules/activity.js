@@ -1,21 +1,17 @@
-import { SALESTRATEGYTYPES } from '../../common/constant'
 import tools from '../../common/tools'
 
-let types = SALESTRATEGYTYPES
-let preState = {}
-types.forEach((cur) => {
-  preState[cur] = {
+const state = {
+  activityTable: {
     cur: [],
     bak: [],
     willInsert: [],
     willUpdate: [],
     willDelete: []
   }
-})
-const state = {...preState}
+}
 
 const mutations = {
-  initsalestrategy (state, payload) {
+  initactivity (state, payload) {
     for (let k in payload) {
       if (tools.isEmptyObject(payload[k])) {
         state[k].cur = []
@@ -33,7 +29,7 @@ const mutations = {
       state[k].willDelete = []
     }
   },
-  cancelsalestrategy (state) {
+  cancelactivity (state) {
     for (let k in state) {
       // state[k].cur = [].concat(state[k].bak)
       state[k].cur = state[k].bak.map(cur => {
@@ -44,16 +40,16 @@ const mutations = {
       state[k].willDelete = []
     }
   },
-  insertsalestrategy (state, payload) {
-    let obj = payload.data
-    let type = payload.type
-    state[type].willInsert.push(Object.assign({}, obj))
-    state[type].cur.push(Object.assign({
-      '_idx': state[type].willInsert.length - 1,
-      '_setName': 'willInsert'
-    }, obj))
-  },
-  deletesalestrategy  (state, payload) {
+  // insertactivity (state, payload) {
+  //   let obj = payload.data
+  //   let type = payload.type
+  //   state[type].willInsert.push(Object.assign({}, obj))
+  //   state[type].cur.push(Object.assign({
+  //     '_idx': state[type].willInsert.length - 1,
+  //     '_setName': 'willInsert'
+  //   }, obj))
+  // },
+  deleteactivity  (state, payload) {
     let idx = payload.idx
     let type = payload.type
     idx.forEach(i => {
@@ -75,7 +71,7 @@ const mutations = {
       return !tools.isEmptyObject(c)
     })
   },
-  updatesalestrategy (state, payload) {
+  updateactivity (state, payload) {
     let idx = payload.idx
     let data = payload.data
     let type = payload.type

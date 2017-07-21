@@ -127,8 +127,8 @@ export default {
     //     console.log(error)
     //   })
     // } else {
-    let userId = tools.getCookie('userId') || 'yangxiaorong'
-    let userName = tools.getCookie('userName') || '杨筱蓉'
+    let userId = tools.getCookie('userId')
+    let userName = tools.getCookie('userName')
     this.$store.commit('initUser', {
       userId: userId,
       userName: userName

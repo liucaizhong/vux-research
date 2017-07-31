@@ -49,8 +49,8 @@
           </li>
         </ul>
       </div>
-      <!-- <footer class="content-footer">
-      </footer> -->
+      <footer class="content-footer">
+      </footer>
     </div>
   </div>
 </template>
@@ -102,6 +102,7 @@ export default {
 </script>
 
 <style lang="less">
+
   .activity-image {
     display: flex;
     justify-content: space-around;
@@ -132,7 +133,7 @@ export default {
 
         .header-title {
           position: absolute;
-          color: #d60000;
+          color: #bd0927;
           font-size: 2.5em;
           letter-spacing: 6px;
           font-weight: bold;
@@ -142,10 +143,10 @@ export default {
 
         .range-title {
           position: absolute;
-          color: #d60000;
+          color: #bd0927;
           font-size: 1.4em;
           top: 45px;
-          left: 172px;
+          left: 165px;
         }
       }
 
@@ -161,9 +162,9 @@ export default {
             position: absolute;
             top: 0;
             bottom: 0;
-            width: 10px;
+            width: 5px;
             background: #f8afaf;
-            left: 70px;
+            left: 72px;
             margin-left: -10px;
           }
         }
@@ -178,8 +179,8 @@ export default {
 
           &::before {
             content: ' ';
-            width: 18px;
-            height: 18px;
+            width: 12px;
+            height: 12px;
             font-family: 'ecoico';
             speak: none;
             font-style: normal;
@@ -191,12 +192,12 @@ export default {
             -webkit-font-smoothing: antialiased;
             position: absolute;
             color: #fff;
-            background: #d60000;
+            background: #bd0927;
             border-radius: 50%;
-            box-shadow: 0 0 0 8px #f8afaf;
+            box-shadow: 0 0 0 4px #f8afaf;
             text-align: center;
-            left: 73px;
-            top: 0;
+            left: 76px;
+            top: -4px;
             margin: 8px 0 0 -18px;
           }
 
@@ -208,9 +209,9 @@ export default {
             width: 0;
             position: absolute;
             pointer-events: none;
-            border-right-color: #d60000;
-            border-width: 10px;
-            top: 5px;
+            border-right-color: #bd0927;
+            border-width: 8px;
+            top: 3px;
           }
 
           header {
@@ -228,24 +229,25 @@ export default {
           font-size: 12px;
           padding: 0px 0px;
           text-align: center;
-          color: #d60000;
+          color: #bd0927;
         }
 
         .inner-li {
           margin-bottom: 10px;
 
           h2 {
-            color: #d60000;
+            color: #bd0927;
             margin-bottom: 10px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #d60000;
-            font-size: 1.5em;
+            border-bottom: 1px solid #bd0927;
+            font-size: 1.3em;
           }
 
           .infos {
-            color: #1075af;
+            // color: #1075af;
+            color: #000;
             font-size: 12px;
-            font-weight: 300;
+            // font-weight: 300;
             line-height: 1.4;
 
             .row-0 {
@@ -272,6 +274,15 @@ export default {
           margin-bottom: 0;
         }
       }
+
+      .content-footer {
+        background-image: url(../assets/activity-footer.png);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        width: 96px;
+        height: 39px;
+        margin: 0 auto;
+      }
     }
 
     @media (min-width: 768px) {
@@ -290,7 +301,7 @@ export default {
 
           .range-title {
             top: 70px;
-            left: 490px;
+            left: 485px;
           }
         }
 
@@ -301,17 +312,24 @@ export default {
 
             &::before {
               left: 135px;
+              width: 8px;
             }
           }
 
           .outer-li {
 
             &::before {
-              left: 113px;
+              left: 114px;
+              width: 15px;
+              height: 15px;
+              box-shadow: 0 0 0 6px #f8afaf;
+              top: -2px;
             }
 
             &::after {
               left: 120px;
+              border-width: 12px;
+              top: 3px;
             }
 
             header {
@@ -347,6 +365,11 @@ export default {
             }
           }
         }
+
+        .content-footer {
+          width: 205px;
+          height: 84px;
+        }
       }
     }
 
@@ -366,7 +389,7 @@ export default {
 
           .range-title {
             top: 80px;
-            left: 565px;
+            left: 560px;
           }
         }
 
@@ -377,6 +400,7 @@ export default {
 
             &::before {
               left: 165px;
+              width: 10px;
             }
           }
 
@@ -384,10 +408,15 @@ export default {
 
             &::before {
               left: 143px;
+              width: 18px;
+              height: 18px;
+              top: 0px;
+              box-shadow: 0 0 0 8px #f8afaf;
             }
 
             &::after {
               left: 150px;
+              border-width: 16px;
             }
 
             header {
@@ -422,6 +451,11 @@ export default {
               }
             }
           }
+        }
+
+        .content-footer {
+          width: 236px;
+          height: 97px;
         }
       }
     }

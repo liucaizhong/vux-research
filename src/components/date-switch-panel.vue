@@ -217,13 +217,14 @@ export default {
     },
     calDbWeek (d) {
       let year = d.getFullYear()
+      let month = d.getDate()
       let day = d.getDay() || 7
       let fisrtDateOfYear = new Date(year, 0, 1)
       let dayOfFirstDate = fisrtDateOfYear.getDay() || 7
       let realFirstDate = new Date(fisrtDateOfYear.getTime() - (dayOfFirstDate - 1) * this.dayMS)
-      let dateGap = d.getTime() - realFirstDate.getTime()
+      let dateGap = (new Date(year, month, day)).getTime() - realFirstDate.getTime()
       let oddOrEvenWeek = Math.floor(dateGap / (2 * this.weekMS) % 2)
-      if (oddOrEvenWeek === 0) {
+      if (oddOrEvenWeek === 1) {
         return {
           startDbWeek: new Date(d.getTime() - (day - 1) * this.dayMS),
           endDbWeek: new Date(d.getTime() + (14 - day) * this.dayMS)

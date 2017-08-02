@@ -50,6 +50,7 @@ export default {
   'prefered_s_desc': '偏好行业(最多三个)',
   'notPrefered_s_desc': '不偏好行业(最多三个)',
   'recognition_s_desc': '重点推荐个股是否认可,以及认可/不认可的主要原因',
+  'marketHeats_s_desc': '客户关注的市场热点',
   'industry_s_desc': '行业名称',
   'oppotunity_s_desc': '该行业下一季度表现的预期',
   'subindusInterest_s_desc': '对子行业的兴趣度排序',

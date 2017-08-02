@@ -79,7 +79,7 @@ export default {
   created () {
     let date = new Date()
     this.year = date.getFullYear()
-    this.quarter = date.getMonth() / 3 + 1
+    this.quarter = Math.floor(date.getMonth() / 3 + 1)
     this.curUserId = this.$route.params.userId
   },
   mounted () {

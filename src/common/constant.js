@@ -59,7 +59,7 @@ export const SALESTRATEGYFORMS = {
       return vm.$store.state.loginfo.loginfo.userName
     }
   }, 'riskPrefer', 'trading1', 'trading2', 'prefered', 'notPrefered',
-    'recognition'],
+    'recognition', 'marketHeats'],
   's2': [{
     name: 'salesPerson',
     value: function (vm) {

@@ -112,6 +112,20 @@
           >
           </textarea>
         </template>
+        <template slot="marketHeats" scope="props">
+          <textarea
+            :value="props.value"
+            :data-idx="props.idx"
+            :readonly="props.readonly"
+            @input="props.changeEvent"
+            :data-fieldname="props.fieldname"
+            cols="21"
+            rows="6"
+            wrap="hard"
+            maxlength="150"
+          >
+          </textarea>
+        </template>
       </data-table>
     </div>
 
@@ -290,9 +304,17 @@
           </x-textarea>
           <x-textarea
             :placeholder="$t('recognition_s_desc')"
-            :rows="3"
-            :max="66"
+            :rows="5"
+            :max="150"
             v-model="addCS.recognition"
+            autosize
+          >
+          </x-textarea>
+          <x-textarea
+            :placeholder="$t('marketHeats_s_desc')"
+            :rows="5"
+            :max="150"
+            v-model="addCS.marketHeats"
             autosize
           >
           </x-textarea>
@@ -339,8 +361,8 @@
           </x-textarea>
           <x-textarea
             :placeholder="$t('reason2_s_desc')"
-            :rows="3"
-            :max="66"
+            :rows="5"
+            :max="150"
             v-model="addCR.reason2"
             autosize
           >
@@ -355,8 +377,8 @@
           </x-textarea>
           <x-textarea
             :placeholder="$t('requirement_s_desc')"
-            :rows="3"
-            :max="66"
+            :rows="5"
+            :max="150"
             v-model="addCR.requirement"
             autosize
           >
@@ -870,6 +892,10 @@ export default {
 
       th:nth-child(8) {
         min-width: 300px;
+      }
+
+      th:nth-child(9) {
+        min-width: 200px;
       }
     }
   }

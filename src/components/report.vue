@@ -5,7 +5,7 @@
       <grid :rows="2">
         <grid-item
           v-for="(item, i) in value"
-          :link="'workplan/' + item.userId"
+          :link="'report/' + item.userId"
           :label="item.userName"
           :key="i"
         >
@@ -29,16 +29,10 @@ export default {
     return {
       comp: '1', // 南土资产
       deps: DEPS,
-      // year: '',
-      // quarter: '',
       members: {}
     }
   },
   created () {
-    // set current year and quarter
-    // let date = new Date()
-    // this.year = date.getFullYear()
-    // this.quarter = Math.floor(date.getMonth() / 3)
     // axios to get members
     // params: array[dep1, dep2, ...]
     let url = process.env.NODE_ENV === 'production'
@@ -51,8 +45,6 @@ export default {
         deps: this.deps.map((cur) => {
           return this.$t(cur)
         }).join(',')
-        // year: this.year,
-        // quarter: this.quarter
       }
     })
     .then((response) => {

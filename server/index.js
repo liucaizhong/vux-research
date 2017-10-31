@@ -5,7 +5,8 @@ const url = require('url')
 const router = express.Router()
 
 const slandUrl = 'http://slandasset.appchizi.com'
-const orientUrl = 'http://wwy94621.sinaapp.com'
+// const orientUrl = 'http://wwy94621.sinaapp.com'
+const orientUrl = 'http://qy.mtouyan.cn'
 
 const urlMap = {
   '/getcontact': slandUrl + '/contacts/API/get.php',

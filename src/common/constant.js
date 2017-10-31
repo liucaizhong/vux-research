@@ -48,7 +48,7 @@ export const PLANFORMS = {
 }
 
 // define max rows of data table
-export const MAXNUMROWS = 30
+export const MAXNUMROWS = 500
 
 // define sales strategy table 1
 export const SALESTRATEGYTYPES = ['s1', 's2']
@@ -92,7 +92,8 @@ export const COMPINFOS = {
     wxConfig: {
       appid: 'wx50777cd18380e8d2',
       agentid: '16',
-      redirectUri: encodeURIComponent('http://wwy94621.appchizi.com/index.php'),
+      // redirectUri: encodeURIComponent('http://wwy94621.appchizi.com/index.php'),
+      redirectUri: encodeURIComponent('https://qy.mtouyan.cn'),
       state: 'web_login'
     }
   },
@@ -110,3 +111,5 @@ export const COMPINFOS = {
 }
 // define activity
 export const ACTIVITYCOLS = ['date', 'title', 'time', 'place', 'dial', 'guests', 'contacts']
+// define report types
+export const REPORTTYPES = [0, 1, 2, 3, 4, 5]

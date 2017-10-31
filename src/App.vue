@@ -127,7 +127,7 @@ export default {
     //     console.log(error)
     //   })
     // } else {
-    let userId = tools.getCookie('userId')
+    let userId = tools.getCookie('userId') || 'chenjw'
     let userName = tools.getCookie('userName')
     this.$store.commit('initUser', {
       userId: userId,
@@ -153,6 +153,7 @@ html, body {
 }
 
 body {
+  // font-size: 16px;
   background-color: #fbf9fe;
 }
 

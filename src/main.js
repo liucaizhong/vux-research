@@ -17,7 +17,8 @@ Vue.use(AjaxPlugin)
 Vue.config.productionTip = false
 
 // get the language
-let lang = navigator.language || navigator.browserLanguage
+// let lang = navigator.language || navigator.browserLanguage
+let lang = 'zh-CN'
 lang = lang.toLowerCase()
 console.log(lang)
 // add translations directly to the application

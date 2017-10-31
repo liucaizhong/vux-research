@@ -106,3 +106,38 @@ trading1，trading2：0，1，。。。10 代表'0%', '10%', '20%', '30%', '40%'
 # id有值，下面域无值则为删除
   id: '2',
 }]
+
+# 通知/规章制度
+# 新建 post
+*title: 通知/规章制度标题
+content：通知/规章制度说明、内容、概要
+files: 数组，数组元素为对象
+例子：
+  files: [{
+    name: 'dafdfsd.pdf',
+    data: FormData对象
+  },
+  ...]
+**
+
+# 获取 get
+# params
+*id: 通知/规章制度唯一标识符*
+# 得到字段如下：
+*id：通知/规章制度唯一标识符
+title: 通知/规章制度标题
+content：通知/规章制度说明、内容、概要
+files: 数组，数组元素为对象
+createdBy: 创建人（可不返回）
+date: 创建时间
+例子：
+  id: '0',
+  title: 'abc',
+  createdBy: 'chenjw',
+  date: '2017.10.30',
+  content: 'adafidf;asdf',
+  files: [{
+    name: 'dafdfsd.pdf',
+    url: 'www.baidu.com'
+  }]
+**

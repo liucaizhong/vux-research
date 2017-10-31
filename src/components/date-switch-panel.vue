@@ -183,7 +183,7 @@ export default {
     setCurDate (date) {
       let y = date.getFullYear()
       let m = date.getMonth() + 1
-      let q = (m - 1) / 3 + 1
+      let q = Math.floor((m - 1) / 3 + 1)
       let day = date.getDay() || 7
       let startWeek = new Date(date.getTime() - (day - 1) * this.dayMS)
       let endWeek = new Date(date.getTime() + (7 - day) * this.dayMS)

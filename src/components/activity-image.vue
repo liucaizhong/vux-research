@@ -280,7 +280,7 @@ export default {
         background-size: 100% 100%;
         background-repeat: no-repeat;
         width: 96px;
-        height: 39px;
+        height: 48px;
         margin: 0 auto;
       }
     }
@@ -368,7 +368,7 @@ export default {
 
         .content-footer {
           width: 205px;
-          height: 84px;
+          height: 96px;
         }
       }
     }
@@ -445,7 +445,7 @@ export default {
 
               .row-0 {
                 .time {
-                  flex: 0 0 100px;
+                  flex: 0 0 110px;
                   margin-right: 60px;
                 }
               }
@@ -455,7 +455,7 @@ export default {
 
         .content-footer {
           width: 236px;
-          height: 97px;
+          height: 110px;
         }
       }
     }

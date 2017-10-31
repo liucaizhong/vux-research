@@ -5,6 +5,7 @@ import loginfo from './modules/loginfo'
 import workplan from './modules/workplan'
 import salestrategy from './modules/salestrategy'
 import activity from './modules/activity'
+import report from './modules/report'
 
 Vue.use(Vuex)
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     loginfo,
     workplan,
     salestrategy,
-    activity
+    activity,
+    report
   }
 })

@@ -38,7 +38,8 @@ export const BANNERS = [{
 }]
 
 // define abbr. for deps
-export const DEPS = ['research_dep']
+export const DEPS = ['research_dep', 'invest_dep', 'manage_dep',
+  'trade_dep', 'others_dep']
 // define play types and forms
 export const PLANTYPES = ['r', 's', 'i']
 export const PLANFORMS = {
@@ -113,3 +114,27 @@ export const COMPINFOS = {
 export const ACTIVITYCOLS = ['date', 'title', 'time', 'place', 'dial', 'guests', 'contacts']
 // define report types
 export const REPORTTYPES = [0, 1, 2, 3, 4, 5]
+// define month
+export const MONTH = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+]
+export const DAY = [
+  'Su',
+  'Mo',
+  'Tu',
+  'We',
+  'Th',
+  'Fr',
+  'Sa'
+]

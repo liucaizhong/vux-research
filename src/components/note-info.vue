@@ -37,10 +37,10 @@ export default {
       files: []
     }
   },
-  mounted () {
+  created () {
     console.log('this.$route', this.$route)
     // todo:get note
-    this.title = 'abc'
+    this.title = this.$t('notification')
     this.content = 'adafidf;asdf'
     this.files = [{
       name: 'dafdfsd.pdf',
@@ -73,8 +73,9 @@ export default {
       height: 30px;
       font-size: 30px;
       border: none;
-      border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
-      caret-color: @base-color;
+      // border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+      // caret-color: @base-color;
+      color: @base-color;
       outline: none;
       padding-bottom: 5px;
 

@@ -48,11 +48,12 @@ export default {
     this.$http.get(url, {
       params: {
         comp: this.comp,
-        deps: this.deps.map((cur) => {
-          return this.$t(cur)
-        }).join(',')
+        // deps: this.deps.map((cur) => {
+        //   return this.$t(cur)
+        // }).join(',')
         // year: this.year,
         // quarter: this.quarter
+        deps: this.$t(this.deps[0])
       }
     })
     .then((response) => {

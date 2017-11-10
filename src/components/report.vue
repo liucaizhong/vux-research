@@ -42,9 +42,10 @@ export default {
     this.$http.get(url, {
       params: {
         comp: this.comp,
-        deps: this.deps.map((cur) => {
-          return this.$t(cur)
-        }).join(',')
+        // deps: this.deps.map((cur) => {
+        //   return this.$t(cur)
+        // }).join(',')
+        deps: this.$t(this.deps[0])
       }
     })
     .then((response) => {

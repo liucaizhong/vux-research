@@ -4,11 +4,17 @@
       <input
         type="text"
         :placeholder="$t('note_title')"
-        v-focus
+        readonly
         v-model="title"
       >
       <a class="floatUploadBtn" href="javascript:void;" role="button">
-        <input type="file" name="noteFile" id="noteFile" @change="onUploadFile">
+        <input
+          type="file"
+          name="noteFile"
+          id="noteFile"
+          @change="onUploadFile"
+          multiple
+        >
         <i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i>
       </a>
     </div>
@@ -32,6 +38,7 @@
       type="text"
       :placeholder="$t('note_content')"
       v-model="content"
+      v-focus
     />
     <x-button
       type="primary"
@@ -61,7 +68,8 @@ export default {
       showError: false
     }
   },
-  mounted () {
+  created () {
+    this.title = this.$t('notification')
     this.$store.commit('updateLoadingStatus', {
       isLoading: false
     })
@@ -89,7 +97,12 @@ export default {
       // todo: submit
     },
     onUploadFile (e) {
-      this.files.push(e.target.files[0])
+      // this.files.push(e.target.files[0])
+      // console.log('files', e.target.files)
+      this.files = this.files.concat(Array.prototype.map.call(e.target.files, (file) => {
+        return file
+      }))
+      // console.log('files', this.files)
     },
     onDeleteFile (e) {
       const key = e.target.dataset.key
@@ -121,8 +134,9 @@ export default {
       height: 30px;
       font-size: 30px;
       border: none;
-      border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
-      caret-color: @base-color;
+      // border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+      // caret-color: @base-color;
+      color: @base-color;
       outline: none;
       padding-bottom: 5px;
 
@@ -156,6 +170,7 @@ export default {
     top: 0;
     cursor: pointer;
     right: 0;
+    // color: @base-color;
     color: #888;
     // background: #fafafa;
     // border: 1px solid #ddd;

@@ -8,12 +8,12 @@
     >
     </search>
     <ul class="list">
-      <li v-for="report in filterReports">
+      <li v-for="(report, i) in filterReports" :key="i">
         <div slot="header" class="card-header">
           <span>{{ report.title }}</span>
         </div>
-        <div slot="content" class="card-content">
-          <p>{{ decorate(report.desc) }}</p>
+        <div slot="content" class="card-content" @click="onClickReport(report.id)">
+          <p>{{ decorate(report.content) }}</p>
         </div>
         <div slot="footer" class="card-footer">
           <span>{{ report.author }}</span>
@@ -25,6 +25,7 @@
           <a
             :href="report.url"
             target="_self"
+            download
           >
             <span>{{ $t('view_report') }}</span>
           </a>
@@ -61,6 +62,7 @@ export default {
   },
   data () {
     return {
+      userId: '',
       searchValue: '',
       reports: [],
       showToolbar: false,
@@ -72,93 +74,50 @@ export default {
     filterReports: function () {
       return this.reports.filter((cur) => {
         return cur.title.includes(this.searchValue) ||
-          cur.desc.includes(this.searchValue) ||
+          cur.content.includes(this.searchValue) ||
           cur.author.includes(this.searchValue) ||
+          this.$t(`report_type${cur.type}`).includes(this.searchValue) ||
           this.dateFormatter(cur.date).includes(this.searchValue)
       })
     }
   },
   mounted () {
-    this.reports = [{
-      id: '0',
-      title: '季报业绩符合预期，继续看好未来成长',
-      desc: '公司发布2017年3季报，前3季度实现营收61.25亿元，归属于上市公司股东的净利润为6.96亿元，同比只能涨600%。公司发布2017年3季报，前3季度实现营收61.25亿元，归属于上市公司股东的净利润为6.96亿元，同比只能涨600%。',
-      author: '赵辰',
-      date: '2017.9.14',
-      url: 'https://www.baidu.com',
-      type: 0
-    }, {
-      id: '0',
-      title: '季报业绩符合预期，继续看好未来成长最牛报告',
-      desc: '公司发布2017年3季报，前3季度实现营收61.25亿元，归属于上市公司股东的净利润为6.96亿元，同比只能涨600%。',
-      author: '赵辰',
-      date: '2017.9.14',
-      url: 'https://www.baidu.com',
-      type: 1
-    }, {
-      id: '0',
-      title: '季报业绩符合预期，继续看好未来成长',
-      desc: '公司发布2017年3季报，前3季度实现营收61.25亿元，归属于上市公司股东的净利润为6.96亿元，同比只能涨600%。',
-      author: '赵辰',
-      date: '2017.9.14',
-      url: 'https://www.baidu.com',
-      type: 2
-    }, {
-      id: '0',
-      title: '季报业绩符合预期，继续看好未来成长',
-      desc: '公司发布2017年3季报，前3季度实现营收61.25亿元，归属于上市公司股东的净利润为6.96亿元，同比只能涨600%。',
-      author: '赵辰',
-      date: '2017.9.14',
-      url: 'https://www.baidu.com',
-      type: 3
-    }, {
-      id: '0',
-      title: '季报业绩符合预期，继续看好未来成长',
-      desc: '公司发布2017年3季报，前3季度实现营收61.25亿元，归属于上市公司股东的净利润为6.96亿元，同比只能涨600%。',
-      author: '赵辰',
-      date: '2017.9.14',
-      url: 'https://www.baidu.com',
-      type: 4
-    }, {
-      id: '0',
-      title: '季报业绩符合预期，继续看好未来成长',
-      desc: '公司发布2017年3季报，前3季度实现营收61.25亿元，归属于上市公司股东的净利润为6.96亿元，同比只能涨600%。',
-      author: '赵辰',
-      date: '2017.9.14',
-      url: 'https://www.baidu.com',
-      type: 5
-    }, {
-      id: '0',
-      title: '季报业绩符合预期，继续看好未来成长',
-      desc: '公司发布2017年3季报，前3季度实现营收61.25亿元，归属于上市公司股东的净利润为6.96亿元，同比只能涨600%。',
-      author: '赵辰',
-      date: '2017.9.14',
-      url: 'https://www.baidu.com',
-      type: 0
-    }, {
-      id: '0',
-      title: '季报业绩符合预期，继续看好未来成长',
-      desc: '公司发布2017年3季报，前3季度实现营收61.25亿元，归属于上市公司股东的净利润为6.96亿元，同比只能涨600%。',
-      author: '赵辰',
-      date: '2017.9.14',
-      url: 'https://www.baidu.com',
-      type: 2
-    }]
+    this.userId = this.$route.params.userId
+    this.showToolbar = this.$store.state.loginfo.loginfo.userId === this.userId
 
-    // decide whether has authority for uploading
-    // set true for testing
-    this.showToolbar = this.$store.state.loginfo.loginfo.userId ===
-      this.$route.params.userId || true
+    const url = process.env.NODE_ENV === 'production'
+              ? './API/getReports.php'
+              : 'http://localhost:3000/getreports'
 
-    this.$store.commit('updateLoadingStatus', {
-      isLoading: false
+    this.$http.get(url, {
+      params: {
+        userId: this.userId
+      }
+    })
+    .then((response) => {
+      console.log('response', response)
+      const report = response.data.report
+      this.reports = report
+      this.$store.commit('updateLoadingStatus', {
+        isLoading: false
+      })
+    })
+    .catch((error) => {
+      console.log(error)
     })
   },
   methods: {
+    onClickReport (id) {
+      console.log('click report', id)
+      this.$router.push({
+        path: `/report/${this.userId}/${id}`
+      })
+    },
     dateFormatter (date) {
-      const dateArr = date.split('.')
-      return `${this.$t('upload_at')}  ${dateArr[0]}${this.$t('year')}` +
-        `${dateArr[1]}${this.$t('month')}${dateArr[2]}${this.$t('day')}`
+      // const dateArr = date.split('.')
+      // return `${this.$t('upload_at')}  ${dateArr[0]}${this.$t('year')}` +
+      //   `${dateArr[1]}${this.$t('month')}${dateArr[2]}${this.$t('day')}`
+      return `${this.$t('upload_at')}  ${date}`
     },
     onClickUploadBtn (e) {
       // console.log('onClickUploadBtn', e.target.files[0])
@@ -167,9 +126,9 @@ export default {
       if (match) {
         this.$store.commit('uploadFile', file)
         this.$router.push({
-          path: `/report/${this.$route.params.userId}/upload`
+          path: `/report/${this.userId}/upload`
         })
-        this.$router.forward()
+        // this.$router.forward()
       } else {
         this.errorMsg = this.$t('upload_file_extension_error')
         this.showError = true

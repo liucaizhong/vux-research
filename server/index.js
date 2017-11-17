@@ -1,6 +1,8 @@
 const express = require('express')
 const http = require('http')
 const url = require('url')
+// const formidable = require('formidable')
+// const util = require('util')
 // const querystring = require('querystring')
 const router = express.Router()
 
@@ -22,7 +24,10 @@ const urlMap = {
   '/getcs': orientUrl + '/Communication/API/getCS.php',
   '/updatecs': orientUrl + '/Communication/API/updateCS.php',
   '/getcr': orientUrl + '/Communication/API/getCR.php',
-  '/updatecr': orientUrl + '/Communication/API/updateCR.php'
+  '/updatecr': orientUrl + '/Communication/API/updateCR.php',
+  '/getrules': slandUrl + '/rules/API/getRules.php',
+  '/deletenote': slandUrl + '/rules/API/delete.php',
+  '/getreports': slandUrl + '/reports/API/getReports.php'
 }
 
 function mapUrl (rawUrl) {
@@ -86,6 +91,52 @@ function requestPost (realUrl, req, res) {
   postReq.write(data)
   postReq.end()
 }
+
+// function requestPostForm (realUrl, req, res) {
+//   const form = new formidable.IncomingForm()
+//   const data = {}
+//
+//   form.parse(req, (err, fields, files) => {
+//     if (err) {
+//       console.log('err', err)
+//     }
+//     console.log('fields', fields)
+//     console.log('files', files)
+//     console.log('data', util.inspect({fields: fields, files: files}))
+//
+//     data.fields = Object.assign({}, fields)
+//     data.files = Object.assign({}, files)
+//   })
+//
+//   const urlObj = url.parse(realUrl)
+//   const options = {
+//     host: urlObj.hostname,
+//     path: urlObj.path,
+//     port: urlObj.port,
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'multipart/form-data'
+//     }
+//   }
+//
+//   const postReq = http.request(options, function (response) {
+//     let body = ''
+//     response.setEncoding('utf8')
+//     response.on('data', function (chunk) {
+//       body += chunk
+//     })
+//     response.on('end', function () {
+//       res.json(body)
+//     })
+//   })
+//
+//   postReq.on('error', (e) => {
+//     console.log(`problem with request: ${e.message}`)
+//   })
+//
+//   postReq.write(data)
+//   postReq.end()
+// }
 
 module.exports = () => {
   // get contacts
@@ -196,6 +247,36 @@ module.exports = () => {
     console.log('updatecr start!')
     let realUrl = mapUrl(req.url)
     requestPost(realUrl, req, res)
+  })
+  // upload notification
+  // router.post('/uploadnote', (req, res) => {
+  //   console.log('uploadnote start!')
+  //   let realUrl = mapUrl(req.url)
+  //   requestPostForm(realUrl, req, res)
+  // })
+  // get notification&rules
+  router.get('/getrules', (req, res) => {
+    console.log('getrules start!')
+    let urlObj = url.parse(req.url)
+    urlObj.pathname = mapUrl(urlObj.pathname)
+    let realUrl = url.format(urlObj)
+    console.log(realUrl)
+    requestGet(realUrl, req, res)
+  })
+  // delete notice&rule
+  router.post('/deletenote', (req, res) => {
+    console.log('deletenote start!')
+    let realUrl = mapUrl(req.url)
+    requestPost(realUrl, req, res)
+  })
+  // get reports
+  router.get('/getreports', (req, res) => {
+    console.log('getreports start!')
+    let urlObj = url.parse(req.url)
+    urlObj.pathname = mapUrl(urlObj.pathname)
+    let realUrl = url.format(urlObj)
+    console.log(realUrl)
+    requestGet(realUrl, req, res)
   })
 
   return router

@@ -7,25 +7,35 @@
         v-focus
         v-model="title"
       >
-      <a class="floatUploadBtn" href="javascript:void;" role="button">
-        <input type="file" name="ruleFile" id="ruleFile" @change="onUploadFile">
+      <a class="floatUploadBtn" href="javascript:void(0);" role="button">
+        <input
+          type="file"
+          name="ruleFile"
+          id="ruleFile"
+          @change="onUploadFile"
+          multiple
+        >
         <i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i>
       </a>
     </div>
     <ul class="attach-files" v-if="files.length">
       <li v-for="(file, key) in files">
-        <span>
-          <i class="fa fa-file" aria-hidden="true"></i>
-        </span>
-        <span>{{ file.name }}</span>
-        <a
-          href="javascript:void;"
-          role="button"
-          @click.prevent.stop="onDeleteFile"
-          :data-key="key"
-        >
-          <i class="fa fa-times" aria-hidden="true"></i>
-        </a>
+        <div class="file">
+          <span>
+            <i class="fa fa-file" aria-hidden="true"></i>
+          </span>
+          <span>{{ file.name }}</span>
+        </div>
+        <div class="iconbar">
+          <a
+            href="javascript:void;"
+            role="button"
+            @click.prevent.stop="onDeleteFile"
+            :data-key="key"
+          >
+            <i class="fa fa-times" aria-hidden="true" :data-key="key"></i>
+          </a>
+        </div>
       </li>
     </ul>
     <textarea
@@ -41,7 +51,7 @@
       v-model="showError"
       :time="2000"
       type="warn"
-    >{{ $t('release_error') }}</toast>
+    >{{ showErrorText }}</toast>
   </div>
 </template>
 
@@ -58,7 +68,8 @@ export default {
       title: '',
       content: '',
       files: [],
-      showError: false
+      showError: false,
+      showErrorText: ''
     }
   },
   mounted () {
@@ -75,21 +86,55 @@ export default {
   },
   methods: {
     onRelease () {
-      console.log('this.title', this.title)
-      console.log('this.content', this.content)
-      console.log('this.files', this.files)
+      // console.log('this.title', this.title)
+      // console.log('this.content', this.content)
+      // console.log('this.files', this.files)
       const hasError = !this.title || !this.title.length ||
         !this.title.replace(/\s/g, '').length || !this.content ||
         !this.content.length || !this.content.replace(/\s/g, '').length
 
       if (hasError) {
+        this.showErrorText = this.$t('release_error')
         this.showError = true
-      }
+      } else {
+        this.$store.commit('updateLoadingStatus', {
+          isLoading: true
+        })
 
-      // todo: submit
+        // submit
+        const formData = new FormData()
+
+        formData.append('title', this.title)
+        formData.append('content', this.content)
+        formData.append('type', '1')
+        this.files.forEach((cur, i) => {
+          formData.append('file[]', cur, cur.name)
+        })
+
+        const url = process.env.NODE_ENV === 'production'
+                  ? './API/upload.php'
+                  : 'http://slandasset.appchizi.com/rules/API/upload.php'
+
+        this.$http.post(url, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then((response) => {
+          console.dir(response)
+          this.$router.go(-1)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      }
     },
     onUploadFile (e) {
-      this.files.push(e.target.files[0])
+      this.files = this.files.concat(Array.prototype.map.call(e.target.files,
+        (file) => {
+          return file
+        })
+      )
     },
     onDeleteFile (e) {
       const key = e.target.dataset.key
@@ -137,7 +182,7 @@ export default {
     font-size: 18px;
     outline: none;
     border: none;
-    min-height: 500px;
+    min-height: 450px;
     margin-top: 10px;
   }
 
@@ -156,7 +201,7 @@ export default {
     top: 0;
     cursor: pointer;
     right: 0;
-    color: #888;
+    color: #bfbfbf;
     // background: #fafafa;
     // border: 1px solid #ddd;
     /* border-radius: 4px; */
@@ -187,12 +232,12 @@ export default {
       position: relative;
       width: 100%;
       padding: 1px 0;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
 
       a {
-        position: absolute;
-        width: 100%;
-        left: 0;
-        top: 0;
         text-align: right;
 
         i {

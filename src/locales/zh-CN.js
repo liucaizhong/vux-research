@@ -22,8 +22,12 @@ export default {
   // text of loading on router
   'router_loading_text': '请稍候...',
   'save_success': '已保存',
+  'save_fail': '保存失败',
   'to_add_later': '待添加',
   'has_any_nosave': '请先保存',
+  'confirm_delete_note': '确认删除这条通知？',
+  'confirm_delete_rule': '确认删除这条规章制度？',
+  'delete': '删除',
   // desc of deps
   'research_dep': '研究部',
   'invest_dep': '投资部',
@@ -167,6 +171,7 @@ export default {
   'report_title': '请输入报告标题',
   'report_content': '添加报告相关信息',
   'confirm_upload': '确认上传',
+  'report_info': '报告信息',
   'upload_error': '请完善信息',
   'upload_file_extension_error': '文件格式必须为.pdf'
 }

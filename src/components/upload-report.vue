@@ -45,6 +45,7 @@ import { REPORTTYPES } from '../common/constant.js'
 export default {
   data () {
     return {
+      userId: '',
       title: '',
       content: '',
       file: null,
@@ -70,6 +71,7 @@ export default {
       return this.$t(`report_type${t}`)
     })]
     console.log('this.$route', this.$route)
+    this.userId = this.$route.params.userId
     // console.log('this.$store', this.$store.state.report.file)
     this.file = this.$store.state.report.file
     // console.log('match file name', this.file.name.match(/(.*)\.pdf$/i))
@@ -99,7 +101,31 @@ export default {
         this.showError = true
       }
 
-      // todo: submit
+      // submit
+      const formData = new FormData()
+
+      formData.append('userId', this.userId)
+      formData.append('title', this.title)
+      formData.append('content', this.content)
+      formData.append('type', this.type[0])
+      formData.append('file', this.file, this.file.name)
+
+      const url = process.env.NODE_ENV === 'production'
+                ? './API/upload.php'
+                : 'http://slandasset.appchizi.com/reports/API/upload.php'
+
+      this.$http.post(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then((response) => {
+        console.dir(response)
+        this.$router.go(-1)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     }
   }
 }
@@ -127,6 +153,7 @@ export default {
 
   button.weui-btn, input.weui-btn {
     margin-top: 30px;
+    margin-bottom: 20px;
     background-color: #2D82F6;
     width: 93%;
   }

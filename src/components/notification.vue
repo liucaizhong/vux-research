@@ -140,164 +140,22 @@ export default {
       }
     }
 
-    // todo: get rules&notes
-    this.rules = [{
-      id: '0',
-      title: 'abc',
-      createdBy: '陈婧玮',
-      date: '2017.10.30',
-      content: 'adafidf;asdf',
-      files: [{
-        name: 'dafdfsd.pdf',
-        url: 'www.baidu.com'
-      }]
-    },
-    {
-      id: '1',
-      title: 'abc1',
-      createdBy: '陈婧玮',
-      date: '2017.10.30',
-      content: 'adadfsdffidf;asdf',
-      files: [{
-        name: 'dfdf.pdf',
-        url: 'www.baidu.com'
-      }]
-    },
-    {
-      id: '2',
-      title: 'abc2',
-      createdBy: '陈婧玮',
-      date: '2017.10.30',
-      content: 'adafdfdsfidf;asdf',
-      files: [{
-        name: 'dafdferewrsd.pdf',
-        url: 'www.baidu.com'
-      }]
-    },
-    {
-      id: '0',
-      title: 'abc',
-      createdBy: '陈婧玮',
-      date: '2017.10.30',
-      content: 'adafidf;asdf',
-      files: [{
-        name: 'dafdfsd.pdf',
-        url: 'www.baidu.com'
-      }]
-    },
-    {
-      id: '1',
-      title: 'abc1',
-      createdBy: '陈婧玮',
-      date: '2017.10.30',
-      content: 'adadfsdffidf;asdf',
-      files: [{
-        name: 'dfdf.pdf',
-        url: 'www.baidu.com'
-      }]
-    },
-    {
-      id: '2',
-      title: 'abc2',
-      createdBy: '陈婧玮',
-      date: '2017.10.30',
-      content: 'adafdfdsfidf;asdf',
-      files: [{
-        name: 'dafdferewrsd.pdf',
-        url: 'www.baidu.com'
-      }]
-    },
-    {
-      id: '1',
-      title: 'abc1',
-      createdBy: '陈婧玮',
-      date: '2017.10.30',
-      content: 'adadfsdffidf;asdf',
-      files: [{
-        name: 'dfdf.pdf',
-        url: 'www.baidu.com'
-      }]
-    },
-    {
-      id: '2',
-      title: 'abc2',
-      createdBy: '陈婧玮',
-      date: '2017.10.30',
-      content: 'adafdfdsfidf;asdf',
-      files: [{
-        name: 'dafdferewrsd.pdf',
-        url: 'www.baidu.com'
-      }]
-    }]
-    this.notes = [{
-      id: '0',
-      title: 'abc',
-      createdBy: '陈婧玮',
-      date: '2017.10.30',
-      content: '通知：为大家购买11.11团建活动的礼物-IphX,请大家把自己喜欢的颜色（银色、深空灰色）速报到李敬华处，否则统一默认为深空灰色！另外本次团建欲带家属的，请于今日下班前告知，以便安排住宿！通知：为大家购买11.11团建活动的礼物-IphX,请大家把自己喜欢的颜色（银色、深空灰色）速报到李敬华处，否则统一默认为深空灰色！另外本次团建欲带家属的，请于今日下班前告知，以便安排住宿！',
-      files: [{
-        name: 'dafdfsd.pdf',
-        url: 'www.baidu.com'
-      }]
-    },
-    {
-      id: '1',
-      title: 'abc1',
-      createdBy: '陈婧玮',
-      date: '2017.10.30',
-      content: '通知：为大家购买11.11团建活动的礼物-IphX,请大家把自己喜欢的颜色（银色、深空灰色）速报到李敬华处，否则统一默认为深空灰色！另外本次团建欲带家属的，请于今日下班前告知，以便安排住宿！',
-      files: [{
-        name: 'dfdf.pdf',
-        url: 'www.baidu.com'
-      }]
-    },
-    {
-      id: '2',
-      title: 'abc2',
-      createdBy: '陈婧玮',
-      date: '2017.10.30',
-      content: '通知：为大家购买11.11团建活动的礼物-IphX,请大家把自己喜欢的颜色（银色、深空灰色）速报到李敬华处，否则统一默认为深空灰色！另外本次团建欲带家属的，请于今日下班前告知，以便安排住宿！',
-      files: [{
-        name: 'dafdferewrsd.pdf',
-        url: 'www.baidu.com'
-      }]
-    },
-    {
-      id: '0',
-      title: 'abc',
-      createdBy: '陈婧玮',
-      date: '2017.10.30',
-      content: '通知：为大家购买11.11团建活动的礼物-IphX,请大家把自己喜欢的颜色（银色、深空灰色）速报到李敬华处，否则统一默认为深空灰色！另外本次团建欲带家属的，请于今日下班前告知，以便安排住宿！',
-      files: [{
-        name: 'dafdfsd.pdf',
-        url: 'www.baidu.com'
-      }]
-    },
-    {
-      id: '1',
-      title: 'abc1',
-      createdBy: '陈婧玮',
-      date: '2017.10.30',
-      content: '通知：为大家购买11.11团建活动的礼物-IphX,请大家把自己喜欢的颜色（银色、深空灰色）速报到李敬华处，否则统一默认为深空灰色！另外本次团建欲带家属的，请于今日下班前告知，以便安排住宿！',
-      files: [{
-        name: 'dfdf.pdf',
-        url: 'www.baidu.com'
-      }]
-    },
-    {
-      id: '2',
-      title: 'abc2',
-      createdBy: '陈婧玮',
-      date: '2017.10.30',
-      content: '通知：为大家购买11.11团建活动的礼物-IphX,请大家把自己喜欢的颜色（银色、深空灰色）速报到李敬华处，否则统一默认为深空灰色！另外本次团建欲带家属的，请于今日下班前告知，以便安排住宿！',
-      files: [{
-        name: 'dafdferewrsd.pdf',
-        url: 'www.baidu.com'
-      }]
-    }]
+    const url = process.env.NODE_ENV === 'production'
+              ? './API/getRules.php'
+              : 'http://localhost:3000/getrules'
 
-    this.$store.commit('updateLoadingStatus', {
-      isLoading: false
+    this.$http.get(url)
+    .then((response) => {
+      console.log('response', response)
+      const dataObj = response.data
+      this.rules = dataObj.rule
+      this.notes = dataObj.notice.slice(0, 5)
+      this.$store.commit('updateLoadingStatus', {
+        isLoading: false
+      })
+    })
+    .catch((error) => {
+      console.log(error)
     })
   },
   methods: {
@@ -314,13 +172,11 @@ export default {
       // console.log('click note btn')
       this.tabId = 1
     },
-    // onClickRuleLi (rule) {
-    //   this.$store.commit('setCurRuleInfo', rule)
-    // },
     dateFormatter (date) {
-      const dateArr = date.split('.')
-      return `${this.$t('release_at')}  ${dateArr[0]}${this.$t('year')}` +
-        `${dateArr[1]}${this.$t('month')}${dateArr[2]}${this.$t('day')}`
+      // const dateArr = date.split('.')
+      // return `${this.$t('release_at')}  ${dateArr[0]}${this.$t('year')}` +
+      //   `${dateArr[1]}${this.$t('month')}${dateArr[2]}${this.$t('day')}`
+      return `${this.$t('release_at')} ${date}`
     },
     _getStrLength (str) {
       let realLength = 0

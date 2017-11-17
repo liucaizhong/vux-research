@@ -112,6 +112,7 @@ trading1，trading2：0，1，。。。10 代表'0%', '10%', '20%', '30%', '40%'
 *title: 通知/规章制度标题
 content：通知/规章制度说明、内容、概要
 files: 数组，数组元素为对象
+type: 0通知，1制度
 例子：
   files: [{
     name: 'dafdfsd.pdf',

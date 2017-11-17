@@ -1,0 +1,189 @@
+<template lang="html">
+  <div class="report-info">
+    <group :title="$t('report_info')">
+      <x-input
+        :placeholder="$t('report_title')"
+        v-model="title"
+        :readonly="!isEditing"
+      />
+      <cell v-if="file">
+        <div slot="title" class="file">
+          <div class="filename">
+            <i class="fa fa-file" aria-hidden="true"></i>
+            <span>{{ file.name }}</span>
+          </div>
+          <div class="iconbar">
+            <a
+              v-if="file.url"
+              :href="file.url"
+              target="_self"
+              v-show="!isEditing"
+              download
+            >
+              <img src="../assets/jump.png" />
+            </a>
+          </div>
+        </div>
+      </cell>
+      <x-input
+        class="report-type"
+        v-if="!isEditing"
+        :title="$t('report_type')"
+        readonly
+        :value="types[0][type[0]]"
+        text-align="right"
+      >
+      </x-input>
+      <popup-picker
+        v-else
+        :data="types"
+        v-model="type"
+        :placeholder="$t('select_report_type')"
+        :cancel-text="$t('cancel')"
+        :confirm-text="$t('confirm')"
+        :title="$t('report_type')"
+      >
+      </popup-picker>
+      <x-textarea
+        :placeholder="$t('report_content')"
+        v-model="content"
+        :max="200"
+        :readonly="!isEditing"
+      />
+      <x-button
+        v-show="isEditing"
+        type="warn"
+        @click.native="onDel"
+      >{{ $t('delete') }}</x-button>
+    </group>
+    <toast
+      v-model="showToast"
+      :time="2000"
+      :type="showToastType"
+    >{{ showToastText }}</toast>
+  </div>
+</template>
+
+<script>
+import { PopupPicker, XTextarea, XButton, Toast, Group, XInput, Cell } from 'vux'
+import { REPORTTYPES } from '../common/constant.js'
+export default {
+  components: {
+    PopupPicker,
+    XTextarea,
+    XButton,
+    Toast,
+    Group,
+    XInput,
+    Cell
+  },
+  data () {
+    return {
+      userId: '',
+      reportId: '',
+      title: '',
+      content: '',
+      file: null,
+      type: [],
+      types: [],
+      isEditing: false,
+      showToast: false,
+      showToastType: '',
+      showToastText: ''
+    }
+  },
+  methods: {
+    onDel () {
+      console.log('delete')
+    }
+  },
+  created () {
+    // console.log('this.$route', this.$route)
+
+    this.types = [REPORTTYPES.map(t => {
+      return this.$t(`report_type${t}`)
+    })]
+
+    this.userId = this.$route.params.userId
+    this.reportId = this.$route.params.reportId
+
+    const url = process.env.NODE_ENV === 'production'
+              ? './API/getReports.php'
+              : 'http://localhost:3000/getreports'
+
+    this.$http.get(url, {
+      params: {
+        id: this.reportId
+      }
+    })
+    .then((response) => {
+      console.log('response', response)
+      const dataObj = response.data
+      this.content = dataObj.content
+      this.title = dataObj.title
+      this.file = dataObj.file[0]
+      this.type = [dataObj.type]
+
+      this.$store.commit('updateLoadingStatus', {
+        isLoading: false
+      })
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
+}
+</script>
+
+<style lang="less">
+.report-info {
+  height: 100%;
+
+  .file {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
+    .iconbar {
+      a {
+        display: block;
+        width: 25px;
+        height: 25px;
+
+        &:first-child {
+          line-height: 2;
+          text-align: left;
+
+          img {
+            width: 70%;
+            height: 70%;
+          }
+        }
+      }
+    }
+  }
+
+  .vux-popup-picker-value, .report-type .weui-input {
+    color: #999999;
+  }
+
+  .weui-cell.vux-x-textarea {
+    height: 300px;
+    margin-bottom: 30px;
+
+    .weui-cell__bd {
+      height: 100%;
+
+      textarea {
+        height: 100%;
+      }
+    }
+  }
+
+  button.weui-btn, input.weui-btn {
+    margin-bottom: 20px;
+    width: 93%;
+  }
+}
+</style>

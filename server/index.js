@@ -27,7 +27,8 @@ const urlMap = {
   '/updatecr': orientUrl + '/Communication/API/updateCR.php',
   '/getrules': slandUrl + '/rules/API/getRules.php',
   '/deletenote': slandUrl + '/rules/API/delete.php',
-  '/getreports': slandUrl + '/reports/API/getReports.php'
+  '/getreports': slandUrl + '/reports/API/getReports.php',
+  '/getpic': slandUrl + '/workplan/API/getPic.php'
 }
 
 function mapUrl (rawUrl) {
@@ -276,6 +277,14 @@ module.exports = () => {
     urlObj.pathname = mapUrl(urlObj.pathname)
     let realUrl = url.format(urlObj)
     console.log(realUrl)
+    requestGet(realUrl, req, res)
+  })
+  // get workplan image
+  router.get('/getpic', (req, res) => {
+    console.log('getpic start!')
+    let urlObj = url.parse(req.url)
+    urlObj.pathname = mapUrl(urlObj.pathname)
+    let realUrl = url.format(urlObj)
     requestGet(realUrl, req, res)
   })
 

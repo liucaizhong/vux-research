@@ -2,7 +2,7 @@
   <div class="notification">
     <div ref="notePage" class="tab-page note">
       <div class="header-panel">{{ $t('notification') }}</div>
-      <swiper
+      <!-- <swiper
         auto
         loop
         :show-dots="true"
@@ -26,13 +26,23 @@
             </div>
           </router-link>
         </swiper-item>
-      </swiper>
-      <!-- <ul>
-        <li class="list-item" v-for="note in notes">
+      </swiper> -->
+      <ul :style="{ height: swiperHeight + 'px'}">
+        <li
+          class="list-item"
+          v-for="(note, index) in notes"
+          :key="index"
+        >
           <router-link
             :to="'/note/'+note.id"
           >
             <div class="left">
+              <div class="title">{{ decorate(note.content) }}</div>
+              <span class="datetime">
+                {{ note.createdBy + ' ' + dateFormatter(note.date) }}
+              </span>
+            </div>
+            <!-- <div class="left">
               <span class="title">{{ note.title }}</span>
               <span class="datetime">
                 {{ dateFormatter(note.date) }}
@@ -40,10 +50,10 @@
             </div>
             <div class="right">
               <span class="createdBy">{{ note.createdBy }}</span>
-            </div>
+            </div> -->
           </router-link>
         </li>
-      </ul> -->
+      </ul>
     </div>
     <div ref="rulePage" class="tab-page rule">
       <div class="header-panel">{{ $t('rules') }}</div>
@@ -121,7 +131,7 @@ export default {
     SwiperItem
   },
   mounted () {
-    this.showAdminBtn = this.$store.state.loginfo.loginfo.userId === 'chenjw'
+    this.showAdminBtn = this.$store.state.loginfo.loginfo.userId === 'lijh'
     // console.log('this.$refs.notePage.$el', this.$refs.notePage.clientHeight)
     this.swiperHeight = this.$refs.notePage.clientHeight - 40
     this.ruleUlHeight = this.$refs.rulePage.clientHeight - 40
@@ -149,7 +159,8 @@ export default {
       console.log('response', response)
       const dataObj = response.data
       this.rules = dataObj.rule
-      this.notes = dataObj.notice.slice(0, 5)
+      // dataObj.notice[0].content = '周六下午团建（测试）周六下午团建（测试）周六下午团建（测试）周六下午团建（测试）周六下午团建（测试）周六下午团建（测试）'
+      this.notes = dataObj.notice
       this.$store.commit('updateLoadingStatus', {
         isLoading: false
       })
@@ -195,7 +206,7 @@ export default {
     },
     decorate (str) {
       const strLen = this._getStrLength(str)
-      const len = 210
+      const len = 82
       let strLength = 0
       let strCut = ''
 
@@ -241,7 +252,7 @@ export default {
     }
 
     button {
-      font-size: 12px;
+      font-size: 14px;
       color: #767676;
       padding: 10px 0;
       border-radius: 0;
@@ -270,7 +281,7 @@ export default {
     width: 100px;
     bottom: 53px;
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     border-right: .5px solid rgba(0, 0, 0, 0.2);
     border-bottom: .5px solid rgba(0, 0, 0, 0.2);
 
@@ -292,7 +303,7 @@ export default {
         top: 0;
         left: 0;
         height: 100%;
-        line-height: 3;
+        line-height: 2.5;
       }
     }
   }
@@ -327,6 +338,13 @@ export default {
       padding-left: 12px;
     }
 
+    ul {
+      padding-left: 12px;
+      padding-right: 12px;
+      box-sizing: border-box;
+      overflow-y: scroll;
+    }
+
     .list-item {
       position: relative;
       height: 50px;
@@ -346,6 +364,7 @@ export default {
         display: flex;
         top: 0;
         justify-content: space-between;
+        padding-top: 5px;
 
         div {
           display: flex;
@@ -354,7 +373,7 @@ export default {
         }
 
         .title {
-          font-size: 20px;
+          font-size: 18px;
           // line-height: 2;
         }
 
@@ -370,33 +389,52 @@ export default {
       }
     }
 
-    ul {
-      padding-left: 12px;
-      padding-right: 12px;
-    }
-
     &.note {
-      height: 35%;
+      height: 40%;
 
       * {
         box-sizing: border-box;
       }
 
+      // .list-item {
+      //   height: 100%;
+      //   border-bottom: none;
+      //
+      //   a {
+      //     padding: 10px 0;
+      //
+      //
+      //     .left {
+      //       height: 100%;
+      //       justify-content: space-between;
+      //
+      //       .title {
+      //         font-size: 16px;
+      //       }
+      //     }
+      //   }
+      // }
+
+      ul {
+        padding-bottom: 5px;
+      }
+
       .list-item {
-        height: 100%;
-        border-bottom: none;
+        height: 80px;
+        width: 100%;
 
-        a {
-          padding: 10px 0;
+        .left {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
 
+          .title {
+            font-size: 16px;
+          }
 
-          .left {
-            height: 100%;
-            justify-content: space-between;
-
-            .title {
-              font-size: 16px;
-            }
+          .datetime {
+            display: block;
+            padding-bottom: 2px;
           }
         }
       }
@@ -404,11 +442,9 @@ export default {
 
     &.rule {
       // margin-bottom: 5px;
-      height: 65%;
+      height: 60%;
 
       ul {
-        box-sizing: border-box;
-        overflow-y: scroll;
         padding-bottom: 55px;
       }
     }

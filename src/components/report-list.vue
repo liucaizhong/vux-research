@@ -25,7 +25,6 @@
           <a
             :href="report.url"
             target="_self"
-            download
           >
             <span>{{ $t('view_report') }}</span>
           </a>
@@ -72,7 +71,7 @@ export default {
   },
   computed: {
     filterReports: function () {
-      return this.reports.filter((cur) => {
+      return this.reports && this.reports.filter((cur) => {
         return cur.title.includes(this.searchValue) ||
           cur.content.includes(this.searchValue) ||
           cur.author.includes(this.searchValue) ||
@@ -110,7 +109,7 @@ export default {
     onClickReport (id) {
       console.log('click report', id)
       this.$router.push({
-        path: `/report/${this.userId}/${id}`
+        path: `/${this.userId}/${id}`
       })
     },
     dateFormatter (date) {
@@ -126,7 +125,8 @@ export default {
       if (match) {
         this.$store.commit('uploadFile', file)
         this.$router.push({
-          path: `/report/${this.userId}/upload`
+          // path: `/report/${this.userId}/upload`
+          path: `/${this.userId}/upload`
         })
         // this.$router.forward()
       } else {
@@ -178,6 +178,8 @@ export default {
 
 <style lang="less">
 .report-list {
+  height: 100%;
+
   .vux-search-box {
     position: fixed !important;
   }

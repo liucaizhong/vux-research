@@ -165,17 +165,20 @@ export default {
     width: 90%;
     margin-top: 20px;
     position: relative;
+    height: 40px;
 
     input[type=text] {
       width: 100%;
-      height: 30px;
-      font-size: 30px;
+      height: 100%;
       border: none;
       // border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
       // caret-color: @base-color;
       color: @base-color;
       outline: none;
-      padding-bottom: 5px;
+      font-size: 28px;
+      padding-bottom: 3px;
+      box-sizing: border-box;
+      border-radius: 0;
 
       &:focus {
         border-bottom: 2px solid @base-color;

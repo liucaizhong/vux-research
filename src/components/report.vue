@@ -5,7 +5,7 @@
       <grid :rows="2">
         <grid-item
           v-for="(item, i) in value"
-          :link="'report/' + item.userId"
+          :link="'/' + item.userId"
           :label="item.userName"
           :key="i"
         >

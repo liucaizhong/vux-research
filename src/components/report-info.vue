@@ -2,30 +2,6 @@
   <div class="report-info">
     <group :title="$t('report_info')">
       <x-input
-        :placeholder="$t('report_title')"
-        v-model="title"
-        :readonly="!isEditing"
-      />
-      <cell v-if="file">
-        <div slot="title" class="file">
-          <div class="filename">
-            <i class="fa fa-file" aria-hidden="true"></i>
-            <span>{{ file.name }}</span>
-          </div>
-          <div class="iconbar">
-            <a
-              v-if="file.url"
-              :href="file.url"
-              target="_self"
-              v-show="!isEditing"
-              download
-            >
-              <img src="../assets/jump.png" />
-            </a>
-          </div>
-        </div>
-      </cell>
-      <x-input
         class="report-type"
         v-if="!isEditing"
         :title="$t('report_type')"
@@ -44,10 +20,45 @@
         :title="$t('report_type')"
       >
       </popup-picker>
+      <!-- <cell value-align="left">
+        <input
+          class="input-title"
+          type="text"
+          v-model="title"
+          :readonly="!isEditing"
+        />
+      </cell> -->
+      <x-input
+        :placeholder="$t('report_title_placeholder')"
+        v-model="title"
+        :title="$t('report_title')"
+        text-align="right"
+        :readonly="!isEditing"
+      />
+      <cell v-if="file">
+        <div slot="title">{{ $t('report_file') }}</div>
+        <div class="file">
+          <div class="filename">
+            <!-- <i class="fa fa-file" aria-hidden="true"></i> -->
+            <span>{{ file.name }}</span>
+          </div>
+          <div class="iconbar">
+            <a
+              v-if="file.url"
+              :href="file.url"
+              target="_self"
+              v-show="!isEditing"
+            >
+              <img src="../assets/jump.png" />
+            </a>
+          </div>
+        </div>
+      </cell>
       <x-textarea
         :placeholder="$t('report_content')"
         v-model="content"
         :max="200"
+        :title="$t('report_remark')"
         :readonly="!isEditing"
       />
       <x-button
@@ -98,8 +109,6 @@ export default {
     }
   },
   created () {
-    // console.log('this.$route', this.$route)
-
     this.types = [REPORTTYPES.map(t => {
       return this.$t(`report_type${t}`)
     })]
@@ -139,11 +148,22 @@ export default {
 .report-info {
   height: 100%;
 
+  .input-title {
+    outline: none;
+    border: 0;
+    font-size: 17px;
+    line-height: 1.41176471;
+  }
+
   .file {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
+
+    .filename {
+      padding-right: 5px;
+    }
 
     .iconbar {
       a {
@@ -164,7 +184,7 @@ export default {
     }
   }
 
-  .vux-popup-picker-value, .report-type .weui-input {
+  .vux-popup-picker-value, .weui-input {
     color: #999999;
   }
 

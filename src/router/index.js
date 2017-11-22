@@ -30,32 +30,45 @@ export default new Router({
     //     }
     //   }
     // },
-    // {
-    //   path: '/',
-    //   component: (r) => {
-    //     require(['@/components/workplan'], r)
-    //   },
-    //   meta: {
-    //     xHeaderConfig: {
-    //       show: false
-    //       // title: 'workplan_main_title',
-    //       // preventGoBack: false
-    //     }
-    //   }
-    // },
-    // {
-    //   path: '/workplan/:userId',
-    //   component: (r) => {
-    //     require(['@/components/workplan-detail'], r)
-    //   },
-    //   meta: {
-    //     xHeaderConfig: {
-    //       show: false
-    //       // title: 'workplan_detail_main_title',
-    //       // preventGoBack: false
-    //     }
-    //   }
-    // }
+    {
+      path: '/',
+      component: (r) => {
+        require(['@/components/workplan'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+          // title: 'workplan_main_title',
+          // preventGoBack: false
+        }
+      }
+    },
+    {
+      path: '/workplan/images',
+      component: (r) => {
+        require(['@/components/workplan-images'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+          // title: 'workplan_detail_main_title',
+          // preventGoBack: false
+        }
+      }
+    },
+    {
+      path: '/workplan/:userId',
+      component: (r) => {
+        require(['@/components/workplan-detail'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+          // title: 'workplan_detail_main_title',
+          // preventGoBack: false
+        }
+      }
+    }
     // {
     //   path: '/',
     //   component: (r) => {
@@ -166,58 +179,61 @@ export default new Router({
     //     }
     //   }
     // }
-    {
-      path: '/',
-      component: (r) => {
-        require(['@/components/report'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-          // title: 'report_main_title',
-          // preventGoBack: false
-        }
-      }
-    },
-    {
-      path: '/report/:userId',
-      component: (r) => {
-        require(['@/components/report-list'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-          // title: 'report_list_main_title',
-          // preventGoBack: false
-        }
-      }
-    },
-    {
-      path: '/report/:userId/upload',
-      component: (r) => {
-        require(['@/components/upload-report'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-          // title: 'upload_main_title',
-          // preventGoBack: false
-        }
-      }
-    },
-    {
-      path: '/report/:userId/:reportId',
-      component: (r) => {
-        require(['@/components/report-info'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-          // title: 'upload_main_title',
-          // preventGoBack: false
-        }
-      }
-    }
+    // {
+    //   path: '/',
+    //   component: (r) => {
+    //     require(['@/components/report'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
+    //       // title: 'report_main_title',
+    //       // preventGoBack: false
+    //     }
+    //   }
+    // },
+    // {
+    //   // path: '/report/:userId',
+    //   path: '/:userId',
+    //   component: (r) => {
+    //     require(['@/components/report-list'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
+    //       // title: 'report_list_main_title',
+    //       // preventGoBack: false
+    //     }
+    //   }
+    // },
+    // {
+    //   // path: '/report/:userId/upload',
+    //   path: '/:userId/upload',
+    //   component: (r) => {
+    //     require(['@/components/upload-report'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
+    //       // title: 'upload_main_title',
+    //       // preventGoBack: false
+    //     }
+    //   }
+    // },
+    // {
+    //   // path: '/report/:userId/:reportId',
+    //   path: '/:userId/:reportId',
+    //   component: (r) => {
+    //     require(['@/components/report-info'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
+    //       // title: 'upload_main_title',
+    //       // preventGoBack: false
+    //     }
+    //   }
+    // }
     // {
     //   path: '/',
     //   component: (r) => {

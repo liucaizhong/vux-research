@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="workplan">
+  <div class="workplan-detail">
     <group-title>{{ mainTitle }}</group-title>
     <data-table
       v-for="(t, i) in planTypes"
@@ -293,7 +293,7 @@ export default {
 </script>
 
 <style lang="less">
-  .workplan {
+  .workplan-detail {
     .task {
       margin-left: 10px;
       margin-right: 10px;

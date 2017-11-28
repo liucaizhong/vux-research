@@ -1,6 +1,7 @@
 <template lang="html">
   <div class="workplan">
     <div v-if="imageSrc" id="image">
+      <div class="image-title">{{ $t('workplan_image_title') }}</div>
       <img :src="imageSrc" alt="loading..." />
     </div>
     <div v-for="(value, key) in members" :key="key">
@@ -15,7 +16,7 @@
         </grid-item>
       </grid>
     </div>
-    <div class="toolbar">
+    <!-- <div class="toolbar">
       <x-button
         ref="adminBtn"
         type="default"
@@ -23,8 +24,8 @@
       >
         {{ $t('workplan_main_title') }}
       </x-button>
-    </div>
-    <div
+    </div> -->
+    <!-- <div
       class="admin-menu"
       ref="adminMenu"
       v-show="showAdminMenu"
@@ -44,12 +45,24 @@
       <div>
         <router-link to="/workplan/images">{{ $t('check_images') }}</router-link>
       </div>
+    </div> -->
+    <div class="toolbar">
+      <div>
+        <router-link to="/workplan/images">
+          {{ $t('check_images') }}
+        </router-link>
+      </div>
+      <div v-if="showToolbar">
+        <router-link to="/workplan/images?edit=true">
+          {{ $t('edit_images') }}
+        </router-link>
+      </div>
     </div>
-    <toast
+    <!-- <toast
       v-model="showError"
       :time="2000"
       type="warn"
-    >{{ errorMsg }}</toast>
+    >{{ errorMsg }}</toast> -->
   </div>
 </template>
 
@@ -73,12 +86,12 @@ export default {
       // year: '',
       // quarter: '',
       members: {},
-      showAdminMenu: false,
-      menuRight: 0,
+      // showAdminMenu: false,
+      // menuRight: 0,
       imageSrc: '',
-      showToolbar: false,
-      errorMsg: '',
-      showError: false
+      showToolbar: false
+      // errorMsg: '',
+      // showError: false
     }
   },
   created () {
@@ -127,7 +140,7 @@ export default {
       vm.$http.get(url)
       .then((response) => {
         console.log('response', response)
-        vm.imageSrc = response.data.files[0].url
+        vm.imageSrc = response.data.files[0] && response.data.files[0].url
         vm.$forceUpdate()
         vm.$store.commit('updateLoadingStatus', {
           isLoading: false
@@ -149,52 +162,52 @@ export default {
     })
   },
   methods: {
-    onClickAdminBtn () {
-      // console.log('click admin btn')
-      this.menuRight = (this.$refs.adminBtn.$el.clientWidth - 100) / 2
-      this.showAdminMenu = !this.showAdminMenu
-    },
-    onClickUploadBtn (e) {
-      this.showAdminMenu = !this.showAdminMenu
-      const file = e.target.files[0]
-      console.dir(file)
-      if (/image\/\w+/.test(file.type)) {
-        this.$store.commit('updateLoadingStatus', {
-          isLoading: true
-        })
-
-        const formData = new FormData()
-
-        formData.append('file', file, file.name)
-
-        const url = process.env.NODE_ENV === 'production'
-                  ? './API/upload.php'
-                  : 'http://slandasset.appchizi.com/workplan/API/upload.php'
-
-        this.$http.post(url, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-        .then((response) => {
-          console.log('response', response)
-          this.imageSrc = response.data
-          // document.getElementById('image').innerHTML =
-          //   `<img src="${this.imageSrct}" alt="loading..." />`
-
-          this.$forceUpdate()
-          this.$store.commit('updateLoadingStatus', {
-            isLoading: false
-          })
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-      } else {
-        this.errorMsg = this.$t('upload_image_extension_error')
-        this.showError = true
-      }
-    }
+    // onClickAdminBtn () {
+    //   // console.log('click admin btn')
+    //   this.menuRight = (this.$refs.adminBtn.$el.clientWidth - 100) / 2
+    //   this.showAdminMenu = !this.showAdminMenu
+    // },
+    // onClickUploadBtn (e) {
+    //   this.showAdminMenu = !this.showAdminMenu
+    //   const file = e.target.files[0]
+    //   console.dir(file)
+    //   if (/image\/\w+/.test(file.type)) {
+    //     this.$store.commit('updateLoadingStatus', {
+    //       isLoading: true
+    //     })
+    //
+    //     const formData = new FormData()
+    //
+    //     formData.append('file', file, file.name)
+    //
+    //     const url = process.env.NODE_ENV === 'production'
+    //               ? './API/upload.php'
+    //               : 'http://slandasset.appchizi.com/workplan/API/upload.php'
+    //
+    //     this.$http.post(url, formData, {
+    //       headers: {
+    //         'Content-Type': 'multipart/form-data'
+    //       }
+    //     })
+    //     .then((response) => {
+    //       console.log('response', response)
+    //       this.imageSrc = response.data
+    //       // document.getElementById('image').innerHTML =
+    //       //   `<img src="${this.imageSrct}" alt="loading..." />`
+    //
+    //       this.$forceUpdate()
+    //       this.$store.commit('updateLoadingStatus', {
+    //         isLoading: false
+    //       })
+    //     })
+    //     .catch((error) => {
+    //       console.log(error)
+    //     })
+    //   } else {
+    //     this.errorMsg = this.$t('upload_image_extension_error')
+    //     this.showError = true
+    //   }
+    // }
   }
 }
 </script>
@@ -204,6 +217,15 @@ export default {
   height: 100%;
   padding-bottom: 70px;
   box-sizing: border-box;
+
+  .image-title {
+    margin-top: 0.77em;
+    margin-bottom: 0.3em;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: #999999;
+    font-size: 14px;
+  }
 
   img {
     width: 100%;
@@ -245,33 +267,33 @@ export default {
       }
     }
 
-    .floatUploadBtn {
-      // line-height: 4;
-      // position: absolute;
-      // top: 0;
-      cursor: pointer;
-      // right: 0;
-      color: #767676;
-      font-size: 14px;
-      overflow: hidden;
-      display: inline-block;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-
-      &:hover {
-        background-color: #EBEBEB;
-      }
-
-      input {
-        position: absolute;
-        font-size: 100px;
-        right: 0;
-        top: 0;
-        opacity: 0;
-        cursor: pointer;
-      }
-    }
+    // .floatUploadBtn {
+    //   // line-height: 4;
+    //   // position: absolute;
+    //   // top: 0;
+    //   cursor: pointer;
+    //   // right: 0;
+    //   color: #767676;
+    //   font-size: 14px;
+    //   overflow: hidden;
+    //   display: inline-block;
+    //   width: 100%;
+    //   height: 100%;
+    //   text-align: center;
+    //
+    //   &:hover {
+    //     background-color: #EBEBEB;
+    //   }
+    //
+    //   input {
+    //     position: absolute;
+    //     font-size: 100px;
+    //     right: 0;
+    //     top: 0;
+    //     opacity: 0;
+    //     cursor: pointer;
+    //   }
+    // }
   }
 
   .toolbar {
@@ -280,33 +302,61 @@ export default {
     bottom: 0;
     width: 100%;
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     height: 50px;
     background-color: #F8F8F8;
-    border-top: 0.5px solid rgba(0, 0, 0, 0.2);
+    border-top: 0.5px solid rgba(0, 0, 0, 0.1);
 
-    .weui-btn + .weui-btn {
-      margin-top: 0;
-    }
+    > div {
+      flex: 1 1 50%;
+      text-align: center;
+      border-right: 0.5px solid rgba(0, 0, 0, 0.1);
 
-    button {
-      font-size: 14px;
-      color: #767676;
-      padding: 10px 0;
-      border-radius: 0;
+      &:hover {
+        background-color: #EBEBEB;
+      }
 
-      &.weui-btn {
-        &::after {
-          border-radius: 0;
-          border: 0.5px solid rgba(0, 0, 0, 0.2);
-          border-left-width: .3px;
-          // border-right-width: .3px;
-        }
+      &:last-child {
+        border-right: none;
+      }
 
-        &:hover {
-          background-color: #EBEBEB;
-        }
+      a {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        font-size: 14px;
+        color: #767676;
+        padding: 15px 0;
+        border-radius: 0;
       }
     }
+
+    // .weui-btn + .weui-btn {
+    //   margin-top: 0;
+    // }
+
+    // button {
+    //   font-size: 14px;
+    //   color: #767676;
+    //   padding: 10px 0;
+    //   border-radius: 0;
+    //
+    //   &.weui-btn {
+    //     &::after {
+    //       border-radius: 0;
+    //       border: 0.5px solid rgba(0, 0, 0, 0.2);
+    //       border-left-width: .3px;
+    //       // border-right-width: .3px;
+    //     }
+    //
+    //     &:hover {
+    //       background-color: #EBEBEB;
+    //     }
+    //   }
+    // }
   }
 }
 </style>

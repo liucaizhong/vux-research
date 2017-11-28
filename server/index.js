@@ -28,7 +28,8 @@ const urlMap = {
   '/getrules': slandUrl + '/rules/API/getRules.php',
   '/deletenote': slandUrl + '/rules/API/delete.php',
   '/getreports': slandUrl + '/reports/API/getReports.php',
-  '/getpic': slandUrl + '/workplan/API/getPic.php'
+  '/getpic': slandUrl + '/workplan/API/getPic.php',
+  '/deleteworkplanimage': slandUrl + '/workplan/API/delete.php'
 }
 
 function mapUrl (rawUrl) {
@@ -286,6 +287,12 @@ module.exports = () => {
     urlObj.pathname = mapUrl(urlObj.pathname)
     let realUrl = url.format(urlObj)
     requestGet(realUrl, req, res)
+  })
+  // delete workplan image
+  router.post('/deleteworkplanimage', (req, res) => {
+    console.log('deleteworkplanimage start!')
+    let realUrl = mapUrl(req.url)
+    requestPost(realUrl, req, res)
   })
 
   return router

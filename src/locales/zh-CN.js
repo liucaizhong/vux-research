@@ -179,6 +179,11 @@ export default {
   'upload_file_extension_error': '文件格式必须为.pdf',
   'report_remark': '备注',
   'upload_image': '上传图片',
-  'check_images': '查看季度',
-  'upload_image_extension_error': '请确保文件为图像类型'
+  'delete_image': '删除图片',
+  'delete_image_success': '删除成功',
+  'check_images': '查看历史计划',
+  'edit_images': '编辑历史计划',
+  'upload_image_extension_error': '请确保文件为图像类型',
+  'workplan_image_title': '近期工作计划',
+  'workplan_images_title': '往期工作计划'
 }

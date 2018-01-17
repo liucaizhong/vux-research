@@ -17,6 +17,7 @@ const state = {...preState}
 const mutations = {
   initworkplan (state, payload) {
     for (let k in payload) {
+      payload[k] = payload[k] || []
       state[k].cur = payload[k].map(cur => {
         return Object.assign({}, cur)
       })

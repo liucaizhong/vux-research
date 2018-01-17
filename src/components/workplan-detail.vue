@@ -1,6 +1,24 @@
 <template lang="html">
   <div class="workplan-detail">
     <group-title>{{ mainTitle }}</group-title>
+    <!-- <toast
+      v-model="isSaved"
+      :time="1500"
+      type="success"
+      position="default"
+      :is-show-mask="true"
+    >
+      {{ $t('save_success') }}
+    </toast> -->
+
+    <!-- <card class="task" :header="{ title: $t('task_plan_achievement') }">
+      <div class="plan-chart" slot="content"></div>
+    </card> -->
+
+    <card class="task" :header="{ title: $t('task_real_achievement') }">
+      <div class="real-chart" slot="content"></div>
+    </card>
+
     <data-table
       v-for="(t, i) in planTypes"
       :tableId="`${t}Table`"
@@ -28,24 +46,6 @@
         </textarea>
       </template> -->
     </data-table>
-
-    <toast
-      v-model="isSaved"
-      :time="1500"
-      type="success"
-      position="default"
-      :is-show-mask="true"
-    >
-      {{ $t('save_success') }}
-    </toast>
-
-    <!-- <card class="task" :header="{ title: $t('task_plan_achievement') }">
-      <div class="plan-chart" slot="content"></div>
-    </card> -->
-
-    <card class="task" :header="{ title: $t('task_real_achievement') }">
-      <div class="real-chart" slot="content"></div>
-    </card>
   </div>
 </template>
 
@@ -99,6 +99,7 @@ export default {
         }
       })
       .then((response) => {
+        console.log('response', response)
         let dataObj = response.data
         vm.$store.commit('initworkplan', dataObj)
       })
@@ -137,6 +138,7 @@ export default {
         }
       })
       .then((response) => {
+        // console.log('response', response)
         let data = response.data
         let yAxisMax = 10
         let chartData = vm.planTypes.map((type) => {
@@ -276,8 +278,9 @@ export default {
       })
     },
     configBtnAuth () {
-      let loginUserId = this.$store.state.loginfo.loginfo.userId
-      let editAuth = !this.curUserId.localeCompare(loginUserId) || !loginUserId.localeCompare('chenjw')
+      // const loginUserId = this.$store.state.loginfo.loginfo.userId
+      // const editAuth = !this.curUserId.localeCompare(loginUserId) || !loginUserId.localeCompare('chenjw')
+      const editAuth = false
       return {
         edit: editAuth,
         add: true,

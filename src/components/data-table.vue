@@ -337,7 +337,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: .08px solid rgba(200, 199, 204, .3);
+    border-bottom: .5px solid rgba(200, 199, 204, .3);
+    // border-bottom: 1px solid #E5E5E5;
     // .actions {
     //   position: fixed;
     //   right: 20px;

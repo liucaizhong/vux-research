@@ -2,7 +2,7 @@
   <div>
     <div v-for="(value, key) in members" :key="key">
       <group-title>{{ key }}</group-title>
-      <grid :rows="2">
+      <grid :cols="2">
         <grid-item
           v-for="(item, i) in value"
           :link="'/' + item.userId"

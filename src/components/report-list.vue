@@ -7,30 +7,57 @@
       v-model="searchValue"
     >
     </search>
-    <ul class="list">
-      <li v-for="(report, i) in filterReports" :key="i">
-        <div slot="header" class="card-header">
-          <span>{{ report.title }}</span>
-        </div>
-        <div slot="content" class="card-content" @click="onClickReport(report.id)">
-          <p>{{ decorate(report.content) }}</p>
-        </div>
-        <div slot="footer" class="card-footer">
-          <span>{{ report.author }}</span>
-          -
-          <span>{{ $t(`report_type${report.type}`) }}</span>
-          -
-          <span>{{ dateFormatter(report.date) }}</span>
-          -
+    <div class="list">
+      <ul
+        v-if="reports && reports.length"
+        v-for="(reports, i) in filterReports"
+        :key="i"
+      >
+        <div class="ul-title">{{ $t(`report_type${i}`) }}</div>
+        <li v-for="(report, k) in reports" :key="k">
           <a
             :href="report.url"
             target="_self"
           >
-            <span>{{ $t('view_report') }}</span>
+            <div slot="header" class="card-header">
+              <span>{{ report.title }}</span>
+            </div>
+            <div slot="content" class="card-content">
+              <p>{{ decorate(report.content) }}</p>
+            </div>
+            <div slot="footer" class="card-footer">
+              <span>{{ report.author }}</span>
+              -
+              <span>{{ $t(`report_type${report.type}`) }}</span>
+              -
+              <span>{{ dateFormatter(report.date) }}</span>
+              <!-- -
+              <a
+                :href="report.url"
+                target="_self"
+              >
+                <span>{{ $t('view_report') }}</span>
+              </a> -->
+            </div>
           </a>
-        </div>
-      </li>
-    </ul>
+          <!-- <div
+            v-if="showToolbar"
+            class="right"
+            @click.stop.prevent="onEditReport(report.id)"
+          >
+            <i
+              class="fa fa-pencil-square-o fa-2x"
+              aria-hidden="true"
+              :style="{
+                'line-height': 2.5,
+                'color': '#888'
+              }"
+            >
+            </i>
+          </div> -->
+        </li>
+      </ul>
+    </div>
     <div class="toolbar" v-if="showToolbar">
       <a class="floatUploadBtn" href="javascript:void;" role="button">
         <input
@@ -71,18 +98,23 @@ export default {
   },
   computed: {
     filterReports: function () {
-      return this.reports && this.reports.filter((cur) => {
-        return cur.title.includes(this.searchValue) ||
-          cur.content.includes(this.searchValue) ||
-          cur.author.includes(this.searchValue) ||
-          this.$t(`report_type${cur.type}`).includes(this.searchValue) ||
-          this.dateFormatter(cur.date).includes(this.searchValue)
+      const res = []
+      this.reports.forEach((rp, i) => {
+        res[i] = rp && rp.filter((cur) => {
+          return cur.title.includes(this.searchValue) ||
+            cur.content.includes(this.searchValue) ||
+            cur.author.includes(this.searchValue) ||
+            this.$t(`report_type${cur.type}`).includes(this.searchValue) ||
+            this.dateFormatter(cur.date).includes(this.searchValue)
+        })
       })
+      return res
     }
   },
   mounted () {
     this.userId = this.$route.params.userId
-    this.showToolbar = this.$store.state.loginfo.loginfo.userId === this.userId
+    this.showToolbar = this.$store.state.loginfo.loginfo.userId === this.userId ||
+      this.$store.state.loginfo.loginfo.userId === 'chenjw'
 
     const url = process.env.NODE_ENV === 'production'
               ? './API/getReports.php'
@@ -95,8 +127,7 @@ export default {
     })
     .then((response) => {
       console.log('response', response)
-      const report = response.data.report
-      this.reports = report
+      this.reports = response.data
       this.$store.commit('updateLoadingStatus', {
         isLoading: false
       })
@@ -106,8 +137,8 @@ export default {
     })
   },
   methods: {
-    onClickReport (id) {
-      console.log('click report', id)
+    onEditReport (id) {
+      console.log('edit report', id)
       this.$router.push({
         path: `/${this.userId}/${id}`
       })
@@ -182,36 +213,56 @@ export default {
 
   .vux-search-box {
     position: fixed !important;
+    z-index: 100;
   }
 
   .list {
     padding-top: 44px;
     padding-bottom: 50px;
 
+    .ul-title {
+      padding: 3px 10px;
+      font-size: 14px;
+      font-style: italic;
+      font-weight: 300;
+    }
+
     li {
       background: #fff;
       padding: 8px 10px;
       margin-bottom: 5px;
-      border-top: 0.3px solid rgba(0, 0, 0, 0.2);
+      // border-top: 0.3px solid rgba(0, 0, 0, 0.2);
       border-bottom: 0.3px solid rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+
+      .weui-panel {
+        &::before {
+          content: none;
+        }
+
+        &::after {
+          content: none;
+        }
+      }
 
       .card-header {
         font-size: 16px;
         font-weight: bold;
+        color: #000;
       }
 
       .card-content {
         font-size: 14px;
         padding: 8px 0;
+        color: #000;
       }
 
       .card-footer {
         font-size: 12px;
         color: #888;
-
-        a {
-          color: #888;
-        }
       }
     }
   }

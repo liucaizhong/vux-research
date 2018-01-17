@@ -59,8 +59,9 @@
       <div class="header-panel">{{ $t('rules') }}</div>
         <ul :style="{ height: ruleUlHeight + 'px'}">
           <li class="list-item" v-for="(rule, index) in rules" :key="index">
-            <router-link
-              :to="'/rule/'+rule.id"
+            <a
+              :href="rule.url"
+              target="_self"
             >
               <div class="left">
                 <span class="title">{{ rule.title }}</span>
@@ -68,10 +69,22 @@
                   {{ rule.createdBy + ' ' + dateFormatter(rule.date) }}
                 </span>
               </div>
-              <!-- <div class="right">
-                <span class="createdBy">{{ rule.createdBy }}</span>
-              </div> -->
-            </router-link>
+              <div
+                v-if="showAdminBtn"
+                class="right"
+                @click.stop.prevent="onEditRule(rule.id)"
+              >
+                <!-- <span class="createdBy">{{ rule.createdBy }}</span> -->
+                <i
+                  class="fa fa-pencil-square-o fa-2x"
+                  aria-hidden="true"
+                  :style="{
+                    'line-height': 1.5
+                  }"
+                >
+                </i>
+              </div>
+            </a>
           </li>
         </ul>
     </div>
@@ -137,7 +150,9 @@ export default {
     this.ruleUlHeight = this.$refs.rulePage.clientHeight - 40
 
     window.onresize = () => {
-      this.menuRight = (this.$refs.adminBtn.$el.clientWidth - 100) / 2
+      if (this.$refs.adminBtn) {
+        this.menuRight = (this.$refs.adminBtn.$el.clientWidth - 100) / 2
+      }
       this.swiperHeight = this.$refs.notePage.clientHeight - 40
       this.ruleUlHeight = this.$refs.rulePage.clientHeight - 40
     }
@@ -170,6 +185,11 @@ export default {
     })
   },
   methods: {
+    onEditRule (id) {
+      const url = '/rule/' + id
+      console.log('edit rule', url)
+      this.$router.push(url)
+    },
     onClickAdminBtn () {
       // console.log('click admin btn')
       this.menuRight = (this.$refs.adminBtn.$el.clientWidth - 100) / 2
@@ -206,7 +226,7 @@ export default {
     },
     decorate (str) {
       const strLen = this._getStrLength(str)
-      const len = 82
+      const len = 200
       let strLength = 0
       let strCut = ''
 
@@ -420,7 +440,7 @@ export default {
       }
 
       .list-item {
-        height: 80px;
+        height: 150px;
         width: 100%;
 
         .left {

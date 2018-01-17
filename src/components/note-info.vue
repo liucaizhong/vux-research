@@ -22,13 +22,29 @@
           >
           <i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i>
         </a>
-        <a v-show="isEditing" href="javascript:void(0);" role="button" @click="onCancel">
+        <a
+          v-show="isEditing"
+          href="javascript:void(0);"
+          role="button"
+          @click="onCancel"
+        >
           <img src="../assets/cross.png" />
         </a>
-        <a v-show="isEditing" href="javascript:void(0);" role="button" @click="onSave">
+        <a
+          v-show="isEditing"
+          href="javascript:void(0);"
+          role="button"
+          @click="onSave"
+        >
           <img src="../assets/right.png" />
         </a>
-        <a v-show="!isEditing" href="javascript:void(0);" role="button" @click="onEdit">
+        <a
+          v-if="showAdminBtn"
+          v-show="!isEditing"
+          href="javascript:void(0);"
+          role="button"
+          @click="onEdit"
+        >
           <img src="../assets/edit.png" />
         </a>
       </div>
@@ -115,6 +131,7 @@ export default {
     }
   },
   created () {
+    this.showAdminBtn = this.$store.state.loginfo.loginfo.userId === 'lijh'
     // console.log('this.$route', this.$route)
     this.id = this.$route.params.id
 
@@ -209,9 +226,9 @@ export default {
           })
         })
 
-        console.log('this.files', this.files)
-        console.log('newFiles', newFiles)
-        console.log('delFiles', delFiles)
+        // console.log('this.files', this.files)
+        // console.log('newFiles', newFiles)
+        // console.log('delFiles', delFiles)
 
         // submit
         const formData = new FormData()
@@ -219,6 +236,7 @@ export default {
         formData.append('id', this.id)
         formData.append('title', this.title)
         formData.append('content', this.content)
+        formData.append('type', '0')
 
         newFiles.forEach((cur, i) => {
           formData.append('file[]', cur, cur.name)

@@ -18,23 +18,39 @@
             name="noteFile"
             id="noteFile"
             @change="onUploadFile"
-            multiple
           >
           <i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i>
         </a>
-        <a v-show="isEditing" href="javascript:void(0);" role="button" @click="onCancel">
+        <a
+          v-show="isEditing"
+          href="javascript:void(0);"
+          role="button"
+          @click="onCancel"
+        >
           <img src="../assets/cross.png" />
         </a>
-        <a v-show="isEditing" href="javascript:void(0);" role="button" @click="onSave">
+        <a
+          v-show="isEditing"
+          href="javascript:void(0);"
+          role="button"
+          @click="onSave"
+        >
           <img src="../assets/right.png" />
         </a>
-        <a v-show="!isEditing" href="javascript:void(0);" role="button" @click="onEdit">
+        <a
+          v-if="showAdminBtn"
+          v-show="!isEditing"
+          href="javascript:void(0);"
+          role="button"
+          @click="onEdit"
+        >
           <img src="../assets/edit.png" />
         </a>
       </div>
     </div>
     <ul class="attach-files" v-if="files.length">
       <li v-for="(file, key) in files">
+        <!-- <div class="file" @click="onClickFile(file.url)"> -->
         <div class="file">
           <span>
             <i class="fa fa-file" aria-hidden="true"></i>
@@ -63,6 +79,10 @@
         </div>
       </li>
     </ul>
+    <!-- <div v-if="!isEditing && canvasFile">
+      <canvas id="canvasFile"></canvas>
+      <pdf-viewer :url="canvasFile"></pdf-viewer>
+    </div> -->
     <textarea
       type="text"
       v-model="content"
@@ -92,11 +112,13 @@
 
 <script>
 import { XButton, Toast, Confirm } from 'vux'
+// import PdfViewer from './pdf-viewer'
 export default {
   components: {
     XButton,
     Toast,
     Confirm
+    // PdfViewer
   },
   data () {
     return {
@@ -110,11 +132,14 @@ export default {
       showToast: false,
       showToastText: '',
       showToastType: '',
-      isEditing: false,
-      showConfirm: false
+      isEditing: true,
+      showConfirm: false,
+      showAdminBtn: false
+      // canvasFile: ''
     }
   },
-  mounted () {
+  created () {
+    this.showAdminBtn = this.$store.state.loginfo.loginfo.userId === 'lijh'
     // console.log('this.$route', this.$route)
     this.id = this.$route.params.id
 
@@ -134,10 +159,13 @@ export default {
       this.title = dataObj.title
       this.content = dataObj.content
       this.files = [...dataObj.files]
+      // this.canvasFile = this.files[0] && this.files[0].url
 
       this.titleBak = dataObj.title
       this.contentBak = dataObj.content
       this.filesBak = [...dataObj.files]
+
+      // this.loadPdf(this.canvasFile)
 
       this.$store.commit('updateLoadingStatus', {
         isLoading: false
@@ -148,6 +176,54 @@ export default {
     })
   },
   methods: {
+    // onClickFile (url) {
+    //   console.log('click file name', url)
+    //   if (this.canvasFile !== url) {
+    //     this.$store.commit('updateLoadingStatus', {
+    //       isLoading: true
+    //     })
+    //     this.canvasFile = url
+    //     // this.loadPdf(this.canvasFile)
+    //   }
+    // },
+    // loadPdf (url) {
+    //   if (url) {
+    //     const that = this
+    //     const pdfjsLib = require('pdfjs-dist')
+    //     console.log('pdfjsLib', pdfjsLib)
+    //
+    //     const pdfPath = url
+    //
+    //     // Setting worker path to worker bundle.
+    //     // pdfjsLib.PDFJS.workerSrc = '../../node_modules/pdfjs-dist/build/pdf.worker.js'
+    //
+    //     // It is also possible to disable workers via `PDFJS.disableWorker = true`,
+    //     // however that might degrade the UI performance in web browsers.
+    //
+    //     // Loading a document.
+    //     const loadingTask = pdfjsLib.getDocument(pdfPath)
+    //     loadingTask.promise.then((pdfDocument) => {
+    //       return pdfDocument.getPage(1).then((pdfPage) => {
+    //         // Display page on the existing canvas with 100% scale.
+    //         const viewport = pdfPage.getViewport(1.0)
+    //         const canvas = document.getElementById('canvasFile')
+    //         canvas.width = viewport.width
+    //         canvas.height = viewport.height
+    //         const ctx = canvas.getContext('2d')
+    //         const renderTask = pdfPage.render({
+    //           canvasContext: ctx,
+    //           viewport: viewport
+    //         })
+    //         that.$store.commit('updateLoadingStatus', {
+    //           isLoading: false
+    //         })
+    //         return renderTask.promise
+    //       })
+    //     }).catch((reason) => {
+    //       console.error('Error: ' + reason)
+    //     })
+    //   }
+    // },
     onEdit () {
       this.isEditing = !this.isEditing
     },
@@ -176,10 +252,11 @@ export default {
       })
     },
     onCancel () {
-      this.title = this.titleBak
-      this.content = this.contentBak
-      this.files = [...this.filesBak]
-      this.isEditing = !this.isEditing
+      // this.title = this.titleBak
+      // this.content = this.contentBak
+      // this.files = [...this.filesBak]
+      // this.isEditing = !this.isEditing
+      this.$router.go(-1)
     },
     onSave () {
       const hasError = !this.title || !this.title.length ||
@@ -191,9 +268,9 @@ export default {
         this.showToastType = 'warn'
         this.showToast = true
       } else {
-        // this.$store.commit('updateLoadingStatus', {
-        //   isLoading: true
-        // })
+        this.$store.commit('updateLoadingStatus', {
+          isLoading: true
+        })
 
         // get new files
         const newFiles = this.files.filter(f => {
@@ -209,9 +286,9 @@ export default {
           })
         })
 
-        console.log('this.files', this.files)
-        console.log('newFiles', newFiles)
-        console.log('delFiles', delFiles)
+        // console.log('this.files', this.files)
+        // console.log('newFiles', newFiles)
+        // console.log('delFiles', delFiles)
 
         // submit
         const formData = new FormData()
@@ -219,6 +296,7 @@ export default {
         formData.append('id', this.id)
         formData.append('title', this.title)
         formData.append('content', this.content)
+        formData.append('type', '1')
 
         newFiles.forEach((cur, i) => {
           formData.append('file[]', cur, cur.name)
@@ -229,8 +307,8 @@ export default {
         formData.append('dfile', JSON.stringify(delFiles))
 
         const url = process.env.NODE_ENV === 'production'
-                  ? './API/upload.php'
-                  : 'http://slandasset.appchizi.com/rules/API/upload.php'
+                  ? './API/update.php'
+                  : 'http://slandasset.appchizi.com/rules/API/update.php'
 
         this.$http.post(url, formData, {
           headers: {
@@ -264,11 +342,13 @@ export default {
       }
     },
     onUploadFile (e) {
-      this.files = this.files.concat(Array.prototype.map.call(e.target.files,
-        (file) => {
-          return file
-        })
-      )
+      // this.files = this.files.concat(Array.prototype.map.call(e.target.files,
+      //   (file) => {
+      //     return file
+      //   })
+      // )
+      this.files[0] = e.target.files[0]
+      this.$forceUpdate()
       // console.log('files', this.files)
     },
     onDeleteFile (e) {
@@ -372,7 +452,7 @@ export default {
     font-size: 18px;
     outline: none;
     border: none;
-    min-height: 500px;
+    min-height: 400px;
     margin-top: 10px;
   }
 

@@ -6,7 +6,7 @@
     </div>
     <div v-for="(value, key) in members" :key="key">
       <group-title>{{ key }}</group-title>
-      <grid :rows="2">
+      <grid :cols="2">
         <grid-item
           v-for="(item, i) in value"
           :link="'workplan/' + item.userId"
@@ -139,7 +139,7 @@ export default {
 
       vm.$http.get(url)
       .then((response) => {
-        console.log('response', response)
+        // console.log('response', response)
         vm.imageSrc = response.data.files[0] && response.data.files[0].url
         vm.$forceUpdate()
         vm.$store.commit('updateLoadingStatus', {

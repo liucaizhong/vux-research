@@ -42,10 +42,15 @@ export const DEPS = ['research_dep', 'invest_dep', 'manage_dep',
   'trade_dep', 'others_dep']
 // define play types and forms
 export const PLANTYPES = ['r', 's', 'i']
+// export const PLANFORMS = {
+//   'r': ['comp', 'date', 'event'],
+//   's': ['stock', 'finishDate', 'reportDate'],
+//   'i': ['indus', 'finishDate', 'reportDate']
+// }
 export const PLANFORMS = {
-  'r': ['comp', 'date', 'event'],
-  's': ['stock', 'finishDate', 'reportDate'],
-  'i': ['indus', 'finishDate', 'reportDate']
+  'r': ['comp', 'date'],
+  's': ['stock', 'finishDate'],
+  'i': ['indus', 'finishDate']
 }
 
 // define max rows of data table
@@ -113,7 +118,7 @@ export const COMPINFOS = {
 // define activity
 export const ACTIVITYCOLS = ['date', 'title', 'time', 'place', 'dial', 'guests', 'contacts']
 // define report types
-export const REPORTTYPES = [0, 1, 2, 3, 4, 5]
+export const REPORTTYPES = ['0', '1', '2', '3', '4', '5', '6']
 // define month
 export const MONTH = [
   'Jan',

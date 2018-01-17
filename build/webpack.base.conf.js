@@ -15,7 +15,8 @@ let webpackConfig = {
   entry: {
     // 'babel-polyfill': 'babel-polyfill',
     // app: './src/main.js'
-    app: ['babel-polyfill', './src/main.js']
+    app: ['babel-polyfill', './src/main.js'],
+    // 'pdf.worker': 'pdfjs-dist/build/pdf.worker.entry.js'
   },
   output: {
     path: config.build.assetsRoot,

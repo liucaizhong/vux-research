@@ -30,45 +30,45 @@ export default new Router({
     //     }
     //   }
     // },
-    {
-      path: '/',
-      component: (r) => {
-        require(['@/components/workplan'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-          // title: 'workplan_main_title',
-          // preventGoBack: false
-        }
-      }
-    },
-    {
-      path: '/workplan/images',
-      component: (r) => {
-        require(['@/components/workplan-images'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-          // title: 'workplan_detail_main_title',
-          // preventGoBack: false
-        }
-      }
-    },
-    {
-      path: '/workplan/:userId',
-      component: (r) => {
-        require(['@/components/workplan-detail'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-          // title: 'workplan_detail_main_title',
-          // preventGoBack: false
-        }
-      }
-    }
+    // {
+    //   path: '/',
+    //   component: (r) => {
+    //     require(['@/components/workplan'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
+    //       // title: 'workplan_main_title',
+    //       // preventGoBack: false
+    //     }
+    //   }
+    // },
+    // {
+    //   path: '/workplan/images',
+    //   component: (r) => {
+    //     require(['@/components/workplan-images'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
+    //       // title: 'workplan_detail_main_title',
+    //       // preventGoBack: false
+    //     }
+    //   }
+    // },
+    // {
+    //   path: '/workplan/:userId',
+    //   component: (r) => {
+    //     require(['@/components/workplan-detail'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
+    //       // title: 'workplan_detail_main_title',
+    //       // preventGoBack: false
+    //     }
+    //   }
+    // }
     // {
     //   path: '/',
     //   component: (r) => {
@@ -124,54 +124,65 @@ export default new Router({
     //     }
     //   }
     // }
+    {
+      path: '/',
+      component: (r) => {
+        require(['@/components/notification'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+        }
+      }
+    },
+    {
+      path: '/releasenote',
+      component: (r) => {
+        require(['@/components/release-note'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+        }
+      }
+    },
+    {
+      path: '/releaserule',
+      component: (r) => {
+        require(['@/components/release-rule'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+        }
+      }
+    },
+    {
+      path: '/rule/:id',
+      component: (r) => {
+        require(['@/components/rule-info'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+        }
+      }
+    },
+    {
+      path: '/note/:id',
+      component: (r) => {
+        require(['@/components/note-info'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+        }
+      }
+    }
     // {
-    //   path: '/',
+    //   path: '/pdf',
     //   component: (r) => {
-    //     require(['@/components/notification'], r)
-    //   },
-    //   meta: {
-    //     xHeaderConfig: {
-    //       show: false
-    //     }
-    //   }
-    // },
-    // {
-    //   path: '/releasenote',
-    //   component: (r) => {
-    //     require(['@/components/release-note'], r)
-    //   },
-    //   meta: {
-    //     xHeaderConfig: {
-    //       show: false
-    //     }
-    //   }
-    // },
-    // {
-    //   path: '/releaserule',
-    //   component: (r) => {
-    //     require(['@/components/release-rule'], r)
-    //   },
-    //   meta: {
-    //     xHeaderConfig: {
-    //       show: false
-    //     }
-    //   }
-    // },
-    // {
-    //   path: '/rule/:id',
-    //   component: (r) => {
-    //     require(['@/components/rule-info'], r)
-    //   },
-    //   meta: {
-    //     xHeaderConfig: {
-    //       show: false
-    //     }
-    //   }
-    // },
-    // {
-    //   path: '/note/:id',
-    //   component: (r) => {
-    //     require(['@/components/note-info'], r)
+    //     require(['@/components/pdf-viewer'], r)
     //   },
     //   meta: {
     //     xHeaderConfig: {

@@ -81,14 +81,14 @@ export default {
   },
   created () {
     // console.log('REPORTTYPES', REPORTTYPES)
-    this.type = [0]
-    this.types = [REPORTTYPES.map((t, i) => {
+    this.type = ['0']
+    this.types = [REPORTTYPES.map((t) => {
       return {
         name: this.$t(`report_type${t}`),
-        value: i
+        value: t
       }
     })]
-    console.log('this.$route', this.$route)
+    console.log('this.types', this.types)
     this.userId = this.$route.params.userId
     // console.log('this.$store', this.$store.state.report.file)
     this.file = this.$store.state.report.file
@@ -109,6 +109,7 @@ export default {
   },
   watch: {
     type: function (val) {
+      console.log('watch type change')
       console.log('val', val)
       this.title = this.composeTitle(val[0])
     }
@@ -116,19 +117,19 @@ export default {
   methods: {
     composeTitle (type) {
       switch (type) {
-        case 0:
+        case '0':
           return `XXX行业深度报告-${moment().format('YYYYMMDD')}`
-        case 1:
+        case '1':
           return `XXX公司深度报告-${moment().format('YYYYMMDD')}`
-        case 2:
+        case '2':
           return `XXX公司调研纪要-${moment().format('YYYYMMDD')}`
-        case 3:
+        case '3':
           return `XXX行业月报-${moment().year()}年${moment().month()}月`
-        case 4:
+        case '4':
           return `XXX行业周报-${moment().format('YYYYMMDD')}`
-        case 5:
+        case '5':
           return `XXX公司${moment().year()}QX季报/${moment().year()}年报点评`
-        case 6:
+        case '6':
           return `XXX报告-${moment().format('YYYYMMDD')}`
         default:
           return `XXX行业深度报告-${moment().format('YYYYMMDD')}`

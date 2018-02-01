@@ -97,88 +97,88 @@ export default new Router({
     //     }
     //   }
     // }
+    {
+      path: '/',
+      component: (r) => {
+        require(['@/components/activity'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+          // title: 'activity_main_title',
+          // preventGoBack: false
+        }
+      }
+    },
+    {
+      path: '/activity/image',
+      name: 'activityImage',
+      component: (r) => {
+        require(['@/components/activity-image'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+          // title: 'activity_main_title',
+          // preventGoBack: false
+        }
+      }
+    }
     // {
     //   path: '/',
     //   component: (r) => {
-    //     require(['@/components/activity'], r)
+    //     require(['@/components/notification'], r)
     //   },
     //   meta: {
     //     xHeaderConfig: {
     //       show: false
-    //       // title: 'activity_main_title',
-    //       // preventGoBack: false
     //     }
     //   }
     // },
     // {
-    //   path: '/activity/image',
-    //   name: 'activityImage',
+    //   path: '/releasenote',
     //   component: (r) => {
-    //     require(['@/components/activity-image'], r)
+    //     require(['@/components/release-note'], r)
     //   },
     //   meta: {
     //     xHeaderConfig: {
     //       show: false
-    //       // title: 'activity_main_title',
-    //       // preventGoBack: false
+    //     }
+    //   }
+    // },
+    // {
+    //   path: '/releaserule',
+    //   component: (r) => {
+    //     require(['@/components/release-rule'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
+    //     }
+    //   }
+    // },
+    // {
+    //   path: '/rule/:id',
+    //   component: (r) => {
+    //     require(['@/components/rule-info'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
+    //     }
+    //   }
+    // },
+    // {
+    //   path: '/note/:id',
+    //   component: (r) => {
+    //     require(['@/components/note-info'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
     //     }
     //   }
     // }
-    {
-      path: '/',
-      component: (r) => {
-        require(['@/components/notification'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-        }
-      }
-    },
-    {
-      path: '/releasenote',
-      component: (r) => {
-        require(['@/components/release-note'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-        }
-      }
-    },
-    {
-      path: '/releaserule',
-      component: (r) => {
-        require(['@/components/release-rule'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-        }
-      }
-    },
-    {
-      path: '/rule/:id',
-      component: (r) => {
-        require(['@/components/rule-info'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-        }
-      }
-    },
-    {
-      path: '/note/:id',
-      component: (r) => {
-        require(['@/components/note-info'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-        }
-      }
-    }
     // {
     //   path: '/pdf',
     //   component: (r) => {

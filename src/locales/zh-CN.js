@@ -187,5 +187,7 @@ export default {
   'edit_images': '编辑历史计划',
   'upload_image_extension_error': '请确保文件为图像类型',
   'workplan_image_title': '近期工作计划',
-  'workplan_images_title': '往期工作计划'
+  'workplan_images_title': '往期工作计划',
+  'AM': '上午',
+  'PM': '下午'
 }

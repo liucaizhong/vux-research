@@ -24,7 +24,7 @@
                         <h2 class="title" v-if="item.title">{{ item.title }}</h2>
                         <div class="row-0">
                           <span class="time" v-if="item.time">
-                            <label>{{ $t('time_a_desc') }}：</label>{{ item.time }}
+                            <label>{{ $t('time_a_desc') }}：</label>{{ timeToPeriod(item.time) }}
                           </span>
                           <span class="place" v-if="item.place">
                             <label>{{ $t('place_a_desc') }}：</label>{{ item.place }}
@@ -96,6 +96,15 @@ export default {
     },
     getDateString (str) {
       return +str.substr(4, 2) + this.$t('month') + (+str.substr(6, 2)) + this.$t('day')
+    },
+    timeToPeriod (str) {
+      console.log('str', str)
+      if (!str.localeCompare('08:00')) {
+        return this.$t('AM')
+      }
+      if (!str.localeCompare('12:00')) {
+        return this.$t('PM')
+      }
     }
   }
 }
@@ -106,6 +115,7 @@ export default {
   .activity-image {
     display: flex;
     justify-content: space-around;
+    min-height: 100%;
 
     /* screen responsive implementation for image */
     .image-content {

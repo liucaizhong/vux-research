@@ -37,7 +37,7 @@
       @download="onDownload"
       :btnAuth="configBtnAuth()"
     >
-      <template slot="title" scope="props">
+      <template slot="title" slot-scope="props">
         <textarea
           :value="props.value"
           :data-idx="props.idx"
@@ -51,7 +51,7 @@
         >
         </textarea>
       </template>
-      <template slot="place" scope="props">
+      <template slot="place" slot-scope="props">
         <textarea
           :value="props.value"
           :data-idx="props.idx"
@@ -65,7 +65,7 @@
         >
         </textarea>
       </template>
-      <template slot="guests" scope="props">
+      <template slot="guests" slot-scope="props">
         <textarea
           :value="props.value"
           :data-idx="props.idx"
@@ -79,7 +79,7 @@
         >
         </textarea>
       </template>
-      <template slot="contacts" scope="props">
+      <template slot="contacts" slot-scope="props">
         <textarea
           :value="props.value"
           :data-idx="props.idx"

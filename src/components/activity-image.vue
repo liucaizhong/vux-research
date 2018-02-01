@@ -98,13 +98,14 @@ export default {
       return +str.substr(4, 2) + this.$t('month') + (+str.substr(6, 2)) + this.$t('day')
     },
     timeToPeriod (str) {
-      console.log('str', str)
+      // console.log('str', str)
       if (!str.localeCompare('08:00')) {
         return this.$t('AM')
       }
       if (!str.localeCompare('12:00')) {
         return this.$t('PM')
       }
+      return str
     }
   }
 }

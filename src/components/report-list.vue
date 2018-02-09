@@ -115,6 +115,7 @@ export default {
     this.userId = this.$route.params.userId
     this.showToolbar = this.$store.state.loginfo.loginfo.userId === this.userId ||
       this.$store.state.loginfo.loginfo.userId === 'chenjw'
+      // this.$store.state.loginfo.loginfo.userId === 'ouyzk'
 
     const url = process.env.NODE_ENV === 'production'
               ? './API/getReports.php'
@@ -237,6 +238,10 @@ export default {
       flex-direction: row;
       flex-wrap: nowrap;
       justify-content: space-between;
+
+      a {
+        width: 100%;
+      }
 
       .weui-panel {
         &::before {

@@ -174,6 +174,7 @@ export default {
   'report_title': '标题',
   'report_title_placeholder': '请输入报告标题',
   'report_content': '添加报告相关信息',
+  'click_add_file': '点击添加',
   'confirm_upload': '确认上传',
   'report_info': '报告信息',
   'upload_error': '请完善信息',

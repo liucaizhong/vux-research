@@ -97,33 +97,33 @@ export default new Router({
     //     }
     //   }
     // }
-    {
-      path: '/',
-      component: (r) => {
-        require(['@/components/activity'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-          // title: 'activity_main_title',
-          // preventGoBack: false
-        }
-      }
-    },
-    {
-      path: '/activity/image',
-      name: 'activityImage',
-      component: (r) => {
-        require(['@/components/activity-image'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-          // title: 'activity_main_title',
-          // preventGoBack: false
-        }
-      }
-    }
+    // {
+    //   path: '/',
+    //   component: (r) => {
+    //     require(['@/components/activity'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
+    //       // title: 'activity_main_title',
+    //       // preventGoBack: false
+    //     }
+    //   }
+    // },
+    // {
+    //   path: '/activity/image',
+    //   name: 'activityImage',
+    //   component: (r) => {
+    //     require(['@/components/activity-image'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
+    //       // title: 'activity_main_title',
+    //       // preventGoBack: false
+    //     }
+    //   }
+    // }
     // {
     //   path: '/',
     //   component: (r) => {
@@ -190,61 +190,61 @@ export default new Router({
     //     }
     //   }
     // }
-    // {
-    //   path: '/',
-    //   component: (r) => {
-    //     require(['@/components/report'], r)
-    //   },
-    //   meta: {
-    //     xHeaderConfig: {
-    //       show: false
-    //       // title: 'report_main_title',
-    //       // preventGoBack: false
-    //     }
-    //   }
-    // },
-    // {
-    //   // path: '/report/:userId',
-    //   path: '/:userId',
-    //   component: (r) => {
-    //     require(['@/components/report-list'], r)
-    //   },
-    //   meta: {
-    //     xHeaderConfig: {
-    //       show: false
-    //       // title: 'report_list_main_title',
-    //       // preventGoBack: false
-    //     }
-    //   }
-    // },
-    // {
-    //   // path: '/report/:userId/upload',
-    //   path: '/:userId/upload',
-    //   component: (r) => {
-    //     require(['@/components/upload-report'], r)
-    //   },
-    //   meta: {
-    //     xHeaderConfig: {
-    //       show: false
-    //       // title: 'upload_main_title',
-    //       // preventGoBack: false
-    //     }
-    //   }
-    // },
-    // {
-    //   // path: '/report/:userId/:reportId',
-    //   path: '/:userId/:reportId',
-    //   component: (r) => {
-    //     require(['@/components/report-info'], r)
-    //   },
-    //   meta: {
-    //     xHeaderConfig: {
-    //       show: false
-    //       // title: 'upload_main_title',
-    //       // preventGoBack: false
-    //     }
-    //   }
-    // }
+    {
+      path: '/',
+      component: (r) => {
+        require(['@/components/report'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+          // title: 'report_main_title',
+          // preventGoBack: false
+        }
+      }
+    },
+    {
+      // path: '/report/:userId',
+      path: '/:userId',
+      component: (r) => {
+        require(['@/components/report-list'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+          // title: 'report_list_main_title',
+          // preventGoBack: false
+        }
+      }
+    },
+    {
+      // path: '/report/:userId/upload',
+      path: '/:userId/upload',
+      component: (r) => {
+        require(['@/components/upload-report'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+          // title: 'upload_main_title',
+          // preventGoBack: false
+        }
+      }
+    },
+    {
+      // path: '/report/:userId/:reportId',
+      path: '/:userId/:reportId',
+      component: (r) => {
+        require(['@/components/report-info'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+          // title: 'upload_main_title',
+          // preventGoBack: false
+        }
+      }
+    }
     // {
     //   path: '/',
     //   component: (r) => {

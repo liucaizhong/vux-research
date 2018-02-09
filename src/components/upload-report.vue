@@ -23,7 +23,7 @@
               id="reportFile"
               @change="onUploadFile"
             />
-            {{ file.name }}
+            {{ file.name || $t('click_add_file') }}
           </a>
         </div>
       </cell>
@@ -146,7 +146,7 @@ export default {
       }
     },
     onUpload () {
-      console.log('confirm upload')
+      // console.log('confirm upload')
       const hasError = !this.title || !this.title.length ||
         !this.title.replace(/\s/g, '').length || !this.content ||
         !this.content.length || !this.content.replace(/\s/g, '').length
@@ -178,6 +178,7 @@ export default {
           this.$router.go(-1)
         })
         .catch((error) => {
+          alert(error)
           console.log(error)
         })
       }
@@ -204,6 +205,10 @@ export default {
         height: 100%;
       }
     }
+  }
+
+  .weui-btn_primary:not(.weui-btn_disabled):active {
+    background-color: #6DA7F7;
   }
 
   button.weui-btn, input.weui-btn {

@@ -178,7 +178,7 @@ export default {
           this.$router.go(-1)
         })
         .catch((error) => {
-          alert(error)
+          // alert(error)
           console.log(error)
         })
       }

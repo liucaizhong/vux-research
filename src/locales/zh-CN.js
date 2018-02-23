@@ -28,6 +28,7 @@ export default {
   'confirm_delete_note': '确认删除这条通知？',
   'confirm_delete_rule': '确认删除这条规章制度？',
   'delete': '删除',
+  'confirm_delete_report': '确认删除报告？',
   // desc of deps
   'research_dep': '研究部',
   'invest_dep': '投资部',

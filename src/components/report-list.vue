@@ -218,7 +218,12 @@ export default {
       })
       .then((response) => {
         // console.log('response', response)
-        const data = JSON.parse(response.data)
+        let data
+        if (process.env.NODE_ENV === 'production') {
+          data = response.data
+        } else {
+          data = JSON.parse(response.data)
+        }
         // console.log('data', data)
         this.reports = data.data
         this.$store.commit('updateLoadingStatus', {

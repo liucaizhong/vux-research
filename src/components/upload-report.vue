@@ -45,10 +45,10 @@
       >{{ $t('confirm_upload') }}</x-button>
     </group>
     <toast
-      v-model="showError"
+      v-model="showToast"
       :time="2000"
-      type="warn"
-    >{{ errorMsg }}</toast>
+      :type="toastType"
+    >{{ toastMsg }}</toast>
   </div>
 </template>
 
@@ -66,8 +66,9 @@ export default {
       file: null,
       type: [],
       types: [],
-      showError: false,
-      errorMsg: ''
+      showToast: false,
+      toastType: 'success',
+      toastMsg: ''
     }
   },
   components: {
@@ -88,7 +89,7 @@ export default {
         value: t
       }
     })]
-    console.log('this.types', this.types)
+    // console.log('this.types', this.types)
     this.userId = this.$route.params.userId
     // console.log('this.$store', this.$store.state.report.file)
     this.file = this.$store.state.report.file
@@ -99,8 +100,9 @@ export default {
     //   this.title = match[1]
     // } else {
     //   this.title = this.file.name
-    //   this.errorMsg = this.$t('upload_file_extension_error')
-    //   this.showError = true
+    //   this.toastMsg = this.$t('upload_file_extension_error')
+    //   this.toastType = 'warn'
+    //   this.showToast = true
     // }
 
     this.$store.commit('updateLoadingStatus', {
@@ -141,8 +143,9 @@ export default {
       if (match) {
         this.file = file
       } else {
-        this.errorMsg = this.$t('upload_file_extension_error')
-        this.showError = true
+        this.toastMsg = this.$t('upload_file_extension_error')
+        this.toastType = 'warn'
+        this.showToast = true
       }
     },
     onUpload () {
@@ -152,9 +155,13 @@ export default {
         !this.content.length || !this.content.replace(/\s/g, '').length
 
       if (hasError) {
-        this.errorMsg = this.$t('upload_error')
-        this.showError = true
+        this.toastMsg = this.$t('upload_error')
+        this.toastType = 'warn'
+        this.showToast = true
       } else {
+        this.$store.commit('updateLoadingStatus', {
+          isLoading: true
+        })
         // submit
         const formData = new FormData()
 
@@ -174,7 +181,13 @@ export default {
           }
         })
         .then((response) => {
-          console.dir(response)
+          // console.dir(response)
+          this.$store.commit('updateLoadingStatus', {
+            isLoading: false
+          })
+          // this.toastMsg = this.$t('upload_success')
+          // this.toastType = 'success'
+          // this.showToast = true
           this.$router.go(-1)
         })
         .catch((error) => {

@@ -20,12 +20,12 @@
           :key="k"
           :disabled="!showToolbar"
         >
-          <div slot="right-menu">
+          <!-- <div slot="right-menu">
             <swipeout-button
               @click.native="onDeleteReport(report.id)"
               type="warn"
             >{{ $t('delete') }}</swipeout-button>
-          </div>
+          </div> -->
           <div slot="content" class="swipe-item">
             <a
             :href="report.url"
@@ -47,6 +47,12 @@
                 </div>
               </card>
             </a>
+            <div class="card-toolbar">
+              <i
+                class="fa fa-times"
+                @click="onDeleteReport(report.id)"
+              ></i>
+            </div>
           </div>
         </swipeout-item>
       </swipeout>
@@ -335,6 +341,20 @@ export default {
 
       a {
         width: 100%;
+      }
+
+      .card-toolbar {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        i {
+          font-size: 20px;
+          color: rgba(0, 0, 0, 0.3);
+          &:hover {
+            cursor: pointer;
+          }
+        }
       }
 
       .weui-panel {

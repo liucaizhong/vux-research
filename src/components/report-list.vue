@@ -47,7 +47,7 @@
                 </div>
               </card>
             </a>
-            <div class="card-toolbar">
+            <div class="card-toolbar" v-if="showToolbar">
               <i
                 class="fa fa-times"
                 @click="onDeleteReport(report.id)"

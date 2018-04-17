@@ -171,8 +171,8 @@ export default {
   created () {
     this.userId = this.$route.params.userId
     this.showToolbar = this.$store.state.loginfo.loginfo.userId === this.userId ||
-      this.$store.state.loginfo.loginfo.userId === 'chenjw'
-      // this.$store.state.loginfo.loginfo.userId === 'ouyzk'
+      this.$store.state.loginfo.loginfo.userId === 'chenjw' ||
+      this.$store.state.loginfo.loginfo.userId === 'fengx'
     const url = process.env.NODE_ENV === 'production'
               ? './API/getReports.php'
               : 'http://localhost:3000/getreports'

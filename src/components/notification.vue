@@ -57,36 +57,69 @@
     </div>
     <div ref="rulePage" class="tab-page rule">
       <div class="header-panel">{{ $t('rules') }}</div>
-        <ul :style="{ height: ruleUlHeight + 'px'}">
-          <li class="list-item" v-for="(rule, index) in rules" :key="index">
-            <a
-              :href="rule.url"
-              target="_self"
+      <ul :style="{ height: ruleUlHeight + 'px'}">
+        <li class="list-item" v-for="(rule, index) in rules" :key="index">
+          <a
+            :href="rule.url"
+            target="_self"
+          >
+            <div class="left">
+              <span class="title">{{ rule.title }}</span>
+              <span class="datetime">
+                {{ rule.createdBy + ' ' + dateFormatter(rule.date) }}
+              </span>
+            </div>
+            <div
+              v-if="showAdminBtn"
+              class="right"
+              @click.stop.prevent="onEditRule(rule.id)"
             >
-              <div class="left">
-                <span class="title">{{ rule.title }}</span>
-                <span class="datetime">
-                  {{ rule.createdBy + ' ' + dateFormatter(rule.date) }}
-                </span>
-              </div>
-              <div
-                v-if="showAdminBtn"
-                class="right"
-                @click.stop.prevent="onEditRule(rule.id)"
+              <!-- <span class="createdBy">{{ rule.createdBy }}</span> -->
+              <i
+                class="fa fa-pencil-square-o fa-2x"
+                aria-hidden="true"
+                :style="{
+                  'line-height': 1.5
+                }"
               >
-                <!-- <span class="createdBy">{{ rule.createdBy }}</span> -->
-                <i
-                  class="fa fa-pencil-square-o fa-2x"
-                  aria-hidden="true"
-                  :style="{
-                    'line-height': 1.5
-                  }"
-                >
-                </i>
-              </div>
-            </a>
-          </li>
-        </ul>
+              </i>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div ref="summaryPage" class="tab-page summary">
+      <div class="header-panel">{{ $t('meeting_summary') }}</div>
+      <ul :style="{ height: ruleUlHeight + 'px'}">
+        <li class="list-item" v-for="(rule, index) in summarys" :key="index">
+          <a
+            :href="summarys.url"
+            target="_self"
+          >
+            <div class="left">
+              <span class="title">{{ summarys.title }}</span>
+              <span class="datetime">
+                {{ summarys.createdBy + ' ' + dateFormatter(summarys.date) }}
+              </span>
+            </div>
+            <div
+              v-if="showAdminBtn"
+              class="right"
+              @click.stop.prevent="onEditSummary(summarys.id)"
+            >
+              <!-- <span class="createdBy">{{ rule.createdBy }}</span> -->
+              <i
+                class="fa fa-pencil-square-o fa-2x"
+                aria-hidden="true"
+                :style="{
+                  'line-height': 1.5
+                }"
+              >
+              </i>
+            </div>
+          </a>
+        </li>
+      </ul>
     </div>
     <div class="toolbar" v-if="showAdminBtn">
       <!-- <x-button
@@ -118,6 +151,9 @@
       <div>
         <router-link to="/releaserule">{{ $t('upload_rule') }}</router-link>
       </div>
+      <div>
+        <router-link to="/releasesummary">{{ $t('upload_summary') }}</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -135,6 +171,7 @@ export default {
       // tabId: 0,
       rules: [],
       notes: [],
+      summarys: [],
       swiperHeight: 0
     }
   },
@@ -144,7 +181,7 @@ export default {
     SwiperItem
   },
   mounted () {
-    this.showAdminBtn = this.$store.state.loginfo.loginfo.userId === 'lijh'
+    this.showAdminBtn = this.$store.state.loginfo.loginfo.userId === 'lijh' || true
     // console.log('this.$refs.notePage.$el', this.$refs.notePage.clientHeight)
     this.swiperHeight = this.$refs.notePage.clientHeight - 40
     this.ruleUlHeight = this.$refs.rulePage.clientHeight - 40
@@ -188,6 +225,11 @@ export default {
     onEditRule (id) {
       const url = '/rule/' + id
       console.log('edit rule', url)
+      this.$router.push(url)
+    },
+    onEditSummary (id) {
+      const url = '/summary/' + id
+      console.log('edit summary', url)
       this.$router.push(url)
     },
     onClickAdminBtn () {

@@ -27,6 +27,7 @@ export default {
   'has_any_nosave': '请先保存',
   'confirm_delete_note': '确认删除这条通知？',
   'confirm_delete_rule': '确认删除这条规章制度？',
+  'confirm_delete_summary': '确认删除这条会议纪要？',
   'delete': '删除',
   'confirm_delete_report': '确认删除报告？',
   // desc of deps
@@ -152,10 +153,12 @@ export default {
   'note_title': '请输入标题',
   'note_content': '添加通知的内容...',
   'release': '发布',
-  'notification': '通知',
+  'notification': '发文',
   'release_error': '请完善信息',
   'rule_title': '请输入标题',
   'rule_content': '简要说明规章制度...',
+  'summary_title': '请输入标题',
+  'summary_content': '简要说明会议纪要...',
   'release_at': '发布于',
   'search_report': '输入关键字搜索报告',
   'cancel': '取消',
@@ -192,5 +195,7 @@ export default {
   'workplan_images_title': '往期工作计划',
   'upload_success': '上传成功',
   'AM': '上午',
-  'PM': '下午'
+  'PM': '下午',
+  'upload_summary': '上传会议纪要',
+  'meeting_summary': '会议纪要'
 }

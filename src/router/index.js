@@ -124,61 +124,83 @@ export default new Router({
     //     }
     //   }
     // }
-    // {
-    //   path: '/',
-    //   component: (r) => {
-    //     require(['@/components/notification'], r)
-    //   },
-    //   meta: {
-    //     xHeaderConfig: {
-    //       show: false
-    //     }
-    //   }
-    // },
-    // {
-    //   path: '/releasenote',
-    //   component: (r) => {
-    //     require(['@/components/release-note'], r)
-    //   },
-    //   meta: {
-    //     xHeaderConfig: {
-    //       show: false
-    //     }
-    //   }
-    // },
-    // {
-    //   path: '/releaserule',
-    //   component: (r) => {
-    //     require(['@/components/release-rule'], r)
-    //   },
-    //   meta: {
-    //     xHeaderConfig: {
-    //       show: false
-    //     }
-    //   }
-    // },
-    // {
-    //   path: '/rule/:id',
-    //   component: (r) => {
-    //     require(['@/components/rule-info'], r)
-    //   },
-    //   meta: {
-    //     xHeaderConfig: {
-    //       show: false
-    //     }
-    //   }
-    // },
-    // {
-    //   path: '/note/:id',
-    //   component: (r) => {
-    //     require(['@/components/note-info'], r)
-    //   },
-    //   meta: {
-    //     xHeaderConfig: {
-    //       show: false
-    //     }
-    //   }
-    // }
+    {
+      path: '/',
+      component: (r) => {
+        require(['@/components/notification'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+        }
+      }
+    },
+    {
+      path: '/releasenote',
+      component: (r) => {
+        require(['@/components/release-note'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+        }
+      }
+    },
+    {
+      path: '/releaserule',
+      component: (r) => {
+        require(['@/components/release-rule'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+        }
+      }
+    },
+    {
+      path: '/releasesummary',
+      component: (r) => {
+        require(['@/components/release-summary'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+        }
+      }
+    },
+    {
+      path: '/rule/:id',
+      component: (r) => {
+        require(['@/components/rule-info'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+        }
+      }
+    },
+    {
+      path: '/summary/:id',
+      component: (r) => {
+        require(['@/components/summary-info'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+        }
+      }
+    },
+    {
+      path: '/note/:id',
+      component: (r) => {
+        require(['@/components/note-info'], r)
+      },
+      meta: {
+        xHeaderConfig: {
+          show: false
+        }
+      }
+    }
     // {
     //   path: '/pdf',
     //   component: (r) => {
@@ -190,61 +212,61 @@ export default new Router({
     //     }
     //   }
     // }
-    {
-      path: '/',
-      component: (r) => {
-        require(['@/components/report'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-          // title: 'report_main_title',
-          // preventGoBack: false
-        }
-      }
-    },
-    {
-      // path: '/report/:userId',
-      path: '/:userId',
-      component: (r) => {
-        require(['@/components/report-list'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-          // title: 'report_list_main_title',
-          // preventGoBack: false
-        }
-      }
-    },
-    {
-      // path: '/report/:userId/upload',
-      path: '/:userId/upload',
-      component: (r) => {
-        require(['@/components/upload-report'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-          // title: 'upload_main_title',
-          // preventGoBack: false
-        }
-      }
-    },
-    {
-      // path: '/report/:userId/:reportId',
-      path: '/:userId/:reportId',
-      component: (r) => {
-        require(['@/components/report-info'], r)
-      },
-      meta: {
-        xHeaderConfig: {
-          show: false
-          // title: 'upload_main_title',
-          // preventGoBack: false
-        }
-      }
-    }
+    // {
+    //   path: '/',
+    //   component: (r) => {
+    //     require(['@/components/report'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
+    //       // title: 'report_main_title',
+    //       // preventGoBack: false
+    //     }
+    //   }
+    // },
+    // {
+    //   // path: '/report/:userId',
+    //   path: '/:userId',
+    //   component: (r) => {
+    //     require(['@/components/report-list'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
+    //       // title: 'report_list_main_title',
+    //       // preventGoBack: false
+    //     }
+    //   }
+    // },
+    // {
+    //   // path: '/report/:userId/upload',
+    //   path: '/:userId/upload',
+    //   component: (r) => {
+    //     require(['@/components/upload-report'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
+    //       // title: 'upload_main_title',
+    //       // preventGoBack: false
+    //     }
+    //   }
+    // },
+    // {
+    //   // path: '/report/:userId/:reportId',
+    //   path: '/:userId/:reportId',
+    //   component: (r) => {
+    //     require(['@/components/report-info'], r)
+    //   },
+    //   meta: {
+    //     xHeaderConfig: {
+    //       show: false
+    //       // title: 'upload_main_title',
+    //       // preventGoBack: false
+    //     }
+    //   }
+    // }
     // {
     //   path: '/',
     //   component: (r) => {

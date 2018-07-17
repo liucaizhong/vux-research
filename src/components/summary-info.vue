@@ -144,8 +144,8 @@ export default {
     this.id = this.$route.params.id
 
     const url = process.env.NODE_ENV === 'production'
-              ? './API/getsummarys.php'
-              : 'http://localhost:3000/getsummarys'
+              ? './API/getRules.php'
+              : 'http://localhost:3000/getrules'
 
     this.$http.get(url, {
       params: {

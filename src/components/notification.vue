@@ -91,21 +91,21 @@
     <div ref="summaryPage" class="tab-page summary">
       <div class="header-panel">{{ $t('meeting_summary') }}</div>
       <ul :style="{ height: ruleUlHeight + 'px'}">
-        <li class="list-item" v-for="(rule, index) in summarys" :key="index">
+        <li class="list-item" v-for="(item, index) in summarys" :key="index">
           <a
-            :href="summarys.url"
+            :href="item.url"
             target="_self"
           >
             <div class="left">
-              <span class="title">{{ summarys.title }}</span>
+              <span class="title">{{ item.title }}</span>
               <span class="datetime">
-                {{ summarys.createdBy + ' ' + dateFormatter(summarys.date) }}
+                {{ item.createdBy + ' ' + dateFormatter(item.date) }}
               </span>
             </div>
             <div
               v-if="showAdminBtn"
               class="right"
-              @click.stop.prevent="onEditSummary(summarys.id)"
+              @click.stop.prevent="onEditSummary(item.id)"
             >
               <!-- <span class="createdBy">{{ rule.createdBy }}</span> -->
               <i
@@ -181,7 +181,7 @@ export default {
     SwiperItem
   },
   mounted () {
-    this.showAdminBtn = this.$store.state.loginfo.loginfo.userId === 'lijh' || true
+    this.showAdminBtn = this.$store.state.loginfo.loginfo.userId === 'lijh'
     // console.log('this.$refs.notePage.$el', this.$refs.notePage.clientHeight)
     this.swiperHeight = this.$refs.notePage.clientHeight - 40
     this.ruleUlHeight = this.$refs.rulePage.clientHeight - 40
@@ -213,6 +213,7 @@ export default {
       this.rules = dataObj.rule
       // dataObj.notice[0].content = '周六下午团建（测试）周六下午团建（测试）周六下午团建（测试）周六下午团建（测试）周六下午团建（测试）周六下午团建（测试）'
       this.notes = dataObj.notice
+      this.summarys = dataObj.summary
       this.$store.commit('updateLoadingStatus', {
         isLoading: false
       })

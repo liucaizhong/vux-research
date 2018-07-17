@@ -90,7 +90,10 @@
     </div>
     <div ref="summaryPage" class="tab-page summary">
       <div class="header-panel">{{ $t('meeting_summary') }}</div>
-      <ul :style="{ height: ruleUlHeight + 'px'}">
+      <ul :style="{
+        height: ruleUlHeight + 'px',
+        marginBottom: '55px',
+      }">
         <li class="list-item" v-for="(item, index) in summarys" :key="index">
           <a
             :href="item.url"
@@ -505,11 +508,11 @@ export default {
 
     &.rule {
       // margin-bottom: 5px;
-      height: 60%;
+      height: 40%;
 
-      ul {
-        padding-bottom: 55px;
-      }
+      // ul {
+      //   padding-bottom: 55px;
+      // }
     }
   }
 }
